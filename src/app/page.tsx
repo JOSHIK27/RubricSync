@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
 import {
   Sheet,
   SheetContent,
@@ -19,7 +20,6 @@ export default function Home() {
           This is an AI tool which scans your research report and compares with
           the rubric to generate a comprehensive report with suggestions
         </h3>
-
         <Sheet>
           <SheetTrigger className="bg-[#4d4d50] shadow-lg  text-[#E6E4E3] hover:bg-[#3f3f4a] mt-8 px-12 py-2 text-[16px] rounded-none font-light">
             Try Now

@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
 import pdf from "pdf-parse";
 
 function render_page(pageData: any) {
@@ -32,10 +31,9 @@ let options = {
   pagerender: render_page,
 };
 
-export async function GET() {
-  let dataBuffer = fs.readFileSync("./sample.pdf");
-
-  pdf(dataBuffer, options).then(function (data: any) {
+export async function POST(req: Request) {
+  const { reportDataBuffer, rubricDataBuffer } = await req.json();
+  pdf(reportDataBuffer, options).then(function (data: any) {
     // number of pages
     console.log(data.numpages);
     // number of rendered pages
@@ -45,5 +43,6 @@ export async function GET() {
     // PDF text
     console.log(data.text);
   });
-  return NextResponse.json({ message: "Success" });
+
+  return NextResponse.json({ message: "Success" }, { status: 201 });
 }

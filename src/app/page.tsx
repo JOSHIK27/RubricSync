@@ -1,4 +1,3 @@
-// "use client";
 import { SignOutButton } from "@clerk/nextjs";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import FileUpload from "@/components/fileUpload";
@@ -11,7 +10,6 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 export default async function Home() {
   const { userId } = auth();
   const user = await currentUser();
-  console.log(user);
   return (
     <main className="text-center h-screen flex items-center justify-center">
       <section className="mb-40">
@@ -30,7 +28,6 @@ export default async function Home() {
             <Card className="mx-auto md:w-[500px] p-8 mt-4">
               <Context />
               <FileUpload />
-              <Button className="mt-4 w-full">Generate Report</Button>
             </Card>
           </SheetContent>
         </Sheet>

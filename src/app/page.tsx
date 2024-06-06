@@ -1,14 +1,10 @@
 "use client";
 
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import FileUpload from "@/components/fileUpload";
+import Context from "@/components/ui/context";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 export default function Home() {
   return (
     <main className="text-center h-screen flex items-center justify-center">
@@ -25,13 +21,11 @@ export default function Home() {
             Try Now
           </SheetTrigger>
           <SheetContent side={"bottom"} className="min-h-[600px]">
-            <SheetHeader>
-              <SheetTitle>Are you absolutely sure?</SheetTitle>
-              <SheetDescription>
-                This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
-              </SheetDescription>
-            </SheetHeader>
+            <Card className="mx-auto md:w-[500px] p-8 mt-4">
+              <Context />
+              <FileUpload />
+              <Button className="mt-4 w-full">Generate Report</Button>
+            </Card>
           </SheetContent>
         </Sheet>
       </section>

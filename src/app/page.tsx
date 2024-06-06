@@ -1,11 +1,17 @@
-"use client";
-
+// "use client";
+import { SignOutButton } from "@clerk/nextjs";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import FileUpload from "@/components/fileUpload";
 import Context from "@/components/ui/context";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-export default function Home() {
+import Link from "next/link";
+import { auth, currentUser } from "@clerk/nextjs/server";
+
+export default async function Home() {
+  const { userId } = auth();
+  const user = await currentUser();
+  console.log(user);
   return (
     <main className="text-center h-screen flex items-center justify-center">
       <section className="mb-40">
@@ -28,6 +34,19 @@ export default function Home() {
             </Card>
           </SheetContent>
         </Sheet>
+        {!userId ? (
+          <Link href={"/sign-in"}>
+            <Button className="border-1 border-neutral-600 ml-2 bg-[#F0EBE3] hover:bg-[#cbc6bf] shadow-lg  text-black mt-8 px-12 py-2 text-[16px] rounded-none">
+              Sign In
+            </Button>
+          </Link>
+        ) : (
+          <SignOutButton>
+            <Button className="border-1 border-neutral-600 ml-2 bg-[#F0EBE3] hover:bg-[#cbc6bf] shadow-lg  text-black mt-8 px-12 py-2 text-[16px] rounded-none">
+              Sign Out
+            </Button>
+          </SignOutButton>
+        )}
       </section>
     </main>
   );

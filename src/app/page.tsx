@@ -25,6 +25,7 @@ export default async function Home() {
             Try Now
           </SheetTrigger>
           <SheetContent side={"bottom"} className="min-h-[600px]">
+            {/* {!user ? redirect("/sign-in") : ""} */}
             <Card className="mx-auto md:w-[500px] p-8 mt-4">
               <Context />
               <FileUpload />

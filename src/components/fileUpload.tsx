@@ -20,11 +20,12 @@ import { useRouter } from "next/navigation";
 export default function FileUpload() {
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
-  const { isLoaded, userId, sessionId, getToken } = useAuth();
+  const { isLoaded, userId } = useAuth();
   const router = useRouter();
 
-  // In case the user signs out while on the page.
-  if (!isLoaded || !userId) {
+  if (!isLoaded) {
+    return <></>;
+  } else if (!userId) {
     router.push("/sign-in");
   }
 

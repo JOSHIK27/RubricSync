@@ -17,8 +17,9 @@ export default function Pricing() {
           initial={{ y: 100 }}
           whileInView={{ y: 0 }}
           transition={{ duration: 1, ease: "easeInOut" }}
+          className="m-6"
         >
-          <Card className="p-8 m-6 w-[400px] border-[1px] transition-all duration-300 ease-in-out hover:scale-105 border-[#d3d1ce] bg-[#e8e6e5]">
+          <Card className="p-8 w-[400px] border-[1px] transition-all duration-300 ease-in-out hover:scale-105 border-[#d3d1ce] bg-[#e8e6e5]">
             <h1 className="text-[22px] font-[950] text-[#484642]">Basic</h1>
             <h2 className="text-[40px] font-[950] text-[#484642]">Free</h2>
             <h2 className="text-[16px] text-[#484642] font-[600]">
@@ -100,8 +101,9 @@ export default function Pricing() {
           initial={{ y: 100 }}
           whileInView={{ y: 0 }}
           transition={{ duration: 1, ease: "easeInOut" }}
+          className="m-6"
         >
-          <Card className="p-8 m-6 w-[400px] border-[1px] border-[#d3d1ce] bg-[#e8e6e5] transition-all duration-300 ease-in-out hover:scale-105">
+          <Card className="p-8  w-[400px] border-[1px] border-[#d3d1ce] bg-[#e8e6e5] transition-all duration-300 ease-in-out hover:scale-105">
             <h1 className="text-[22px] font-[950] text-[#484642]">Premium</h1>
             <h2 className="text-[40px] font-[950] text-[#484642]">Soon</h2>
             <h2 className="text-[16px] text-[#484642] font-[600]">

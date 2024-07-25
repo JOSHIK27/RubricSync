@@ -9,6 +9,7 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import Pricing from "./pricing";
 import Footer from "./footer";
 import Features from "./features";
+import Faqs from "./faqs";
 
 export default function Landing({ userId }: { userId: any }) {
   return (
@@ -67,6 +68,7 @@ export default function Landing({ userId }: { userId: any }) {
       </section>
       <Features />
       <Pricing />
+      <Faqs />
       <Footer />
     </>
   );

@@ -88,7 +88,7 @@ export default function Features() {
         </div>
       </div>
       <div className="flex justify-evenly flex-wrap">
-        <Card className="m-4 shadow-md w-80 h-20">
+        <Card className="m-4 shadow-md w-80 h-20 transition-all duration-300 ease-in-out hover:scale-105">
           <div className="p-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +115,7 @@ export default function Features() {
             </h1>
           </div>
         </Card>
-        <Card className="m-4 shadow-md w-80 h-20">
+        <Card className="m-4 shadow-md w-80 h-20 transition-all duration-300 ease-in-out hover:scale-105">
           <div className="p-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -133,7 +133,7 @@ export default function Features() {
             </h1>
           </div>
         </Card>
-        <Card className="m-4 shadow-md w-80 h-20">
+        <Card className="m-4 shadow-md w-80 h-20 transition-all duration-300 ease-in-out hover:scale-105">
           <div className="p-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -151,7 +151,7 @@ export default function Features() {
             </h1>
           </div>
         </Card>
-        <Card className="m-4 shadow-md w-80 h-20">
+        <Card className="m-4 shadow-md w-80 h-20 transition-all duration-300 ease-in-out hover:scale-105">
           <div className="p-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"

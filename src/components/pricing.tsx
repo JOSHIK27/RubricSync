@@ -12,7 +12,7 @@ export default function Pricing() {
         </h2>
       </div>
       <div className="flex justify-center flex-wrap">
-        <Card className="p-8 m-6 w-[400px] border-[1px] transition duration-150 ease-in-out border-[#d3d1ce] bg-[#e8e6e5]">
+        <Card className="p-8 m-6 w-[400px] border-[1px] transition-all duration-300 ease-in-out hover:scale-105 border-[#d3d1ce] bg-[#e8e6e5]">
           <h1 className="text-[22px] font-[950] text-[#484642]">Basic</h1>
           <h2 className="text-[40px] font-[950] text-[#484642]">Free</h2>
           <h2 className="text-[16px] text-[#484642] font-[600]">
@@ -89,7 +89,7 @@ export default function Pricing() {
           </div>
           <Button className="mt-8 w-full bg-[#282624]">Get Started</Button>
         </Card>
-        <Card className="p-8 m-6 w-[400px] border-[1px] border-[#d3d1ce] bg-[#e8e6e5]">
+        <Card className="p-8 m-6 w-[400px] border-[1px] border-[#d3d1ce] bg-[#e8e6e5] transition-all duration-300 ease-in-out hover:scale-105">
           <h1 className="text-[22px] font-[950] text-[#484642]">Premium</h1>
           <h2 className="text-[40px] font-[950] text-[#484642]">Soon</h2>
           <h2 className="text-[16px] text-[#484642] font-[600]">

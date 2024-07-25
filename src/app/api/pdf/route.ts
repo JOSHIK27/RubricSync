@@ -1,60 +1,64 @@
 import { NextResponse } from "next/server";
+import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 import pdf from "pdf-parse";
+import { Document } from "@langchain/core/documents";
 import Together from "together-ai";
+import { render_page } from "@/lib/utils";
+import { RubricPrompt } from "@/prompts/rubric_prompt";
+import { Pinecone } from "@pinecone-database/pinecone";
 
-const together = new Together({
-  apiKey: process.env["TOGETHER_API_KEY"],
-});
-
-function render_page(pageData: any) {
-  //check documents https://mozilla.github.io/pdf.js/
-  let render_options = {
-    //replaces all occurrences of whitespace with standard spaces (0x20). The default value is `false`.
-    normalizeWhitespace: false,
-    //do not attempt to combine same line TextItem's. The default value is `false`.
-    disableCombineTextItems: false,
-  };
-
-  return pageData
-    .getTextContent(render_options)
-    .then(function (textContent: any) {
-      let lastY,
-        text = "";
-      for (let item of textContent.items) {
-        if (lastY == item.transform[5] || !lastY) {
-          text += item.str + " ";
-        } else {
-          text += "\n" + item.str;
-        }
-        lastY = item.transform[5];
-      }
-      return text;
-    });
-}
-
-let options = {
-  pagerender: render_page,
-};
+const pc = new Pinecone({ apiKey: "d07cc4e7-febc-4d5e-8949-d988301a175c" });
+const index = pc.index("sample");
+const together = new Together({ apiKey: process.env.TOGETHER_API_KEY });
 
 export async function POST(req: Request) {
   const { reportDataBuffer, rubricDataBuffer } = await req.json();
-  const reportData = await pdf(reportDataBuffer, options);
-  const rubricData = await pdf(rubricDataBuffer, options);
+
+  const reportData = await pdf(reportDataBuffer, {
+    pagerender: render_page,
+  });
+
+  const rubricData = await pdf(rubricDataBuffer, {
+    pagerender: render_page,
+  });
+  console.log(rubricData.text);
+
+  // const splitter = new RecursiveCharacterTextSplitter({
+  //   chunkSize: 1000,
+  //   chunkOverlap: 100,
+  //   separators: ["|", "##", ">", "-"],
+  // });
+  // const docOutput = await splitter.splitDocuments([
+  //   new Document({ pageContent: reportData.text }),
+  // ]);
+  // console.log(docOutput);
+  // const embeddingVectorList = [];
+  // let num = 0;
+  // for (const context of docOutput) {
+  //   const response = await together.embeddings.create({
+  //     model: "hazyresearch/M2-BERT-2k-Retrieval-Encoder-V1",
+  //     input: context.pageContent,
+  //   });
+  //   embeddingVectorList.push({
+  //     id: `vec${num}`,
+  //     values: response.data[0].embedding,
+  //   });
+  //   num = num + 1;
+  // }
+  // await index.namespace("ns1").upsert(embeddingVectorList);
+  // return NextResponse.json({ message: "OK" });
+  // console.log(reportData.text);
   try {
     const response = await together.chat.completions.create({
       messages: [
         {
           role: "user",
-          content: `You are known as Rubric Syncer. You will provided with a report made a university student and a marking rubric for that report. The feedback should clearly explain what the report lacks in according to rubric and which area's can be improved. 
-           Here's the report : (${reportData.text})
-           and 
-           Here's the marking rubric: (${rubricData.text})
-           Rubric might possibly contain a lot more information about the assignment. Ignore all of them and just compare the rubric and provide feedback. Also estimate the score. Return the data in markup format.
-          `,
+          content: RubricPrompt(rubricData.text),
         },
       ],
-      model: "mistralai/Mixtral-8x22B-Instruct-v0.1",
+      model: "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
     });
+    if (response.choices) console.log(response.choices[0].message?.content);
 
     if (response.choices)
       return NextResponse.json(
@@ -67,4 +71,18 @@ export async function POST(req: Request) {
   } catch (error) {
     return NextResponse.json({ message: error }, { status: 500 });
   }
+}
+
+export async function GET() {
+  const response = await together.embeddings.create({
+    model: "hazyresearch/M2-BERT-2k-Retrieval-Encoder-V1",
+    input: `i do not have right to work in the uk`,
+  });
+  const queryResponse = await index.namespace("ns1").query({
+    vector: response.data[0].embedding,
+    topK: 1,
+    includeValues: true,
+  });
+  console.log(queryResponse);
+  return NextResponse.json({ message: "OK" });
 }

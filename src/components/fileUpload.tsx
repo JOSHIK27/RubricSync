@@ -39,7 +39,7 @@ export default function FileUpload() {
     const reportBytes = await reportFileInput.files[0].arrayBuffer();
     const reportDataBuffer = Buffer.from(reportBytes);
     const rubricFileInput = document.getElementById(
-      "report"
+      "rubric"
     ) as HTMLInputElement;
     if (!rubricFileInput.files) return;
     const rubricBytes = await rubricFileInput.files[0].arrayBuffer();

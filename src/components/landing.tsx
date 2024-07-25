@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import Pricing from "./pricing";
 import Footer from "./footer";
+import Features from "./features";
 
 export default function Landing({ userId }: { userId: any }) {
   return (
@@ -17,7 +18,7 @@ export default function Landing({ userId }: { userId: any }) {
           <motion.div
             initial={{ opacity: 0, scale: 0.75 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ ease: "easeOut", duration: 0.2 }}
+            transition={{ ease: "easeOut", duration: 0.8 }}
             className="text-[120px] font-inter text-center font-extrabold bg-gradient-to-r from-zinc-700 to-zinc-900 bg-clip-text text-transparent"
           >
             Rubric Sync
@@ -64,6 +65,7 @@ export default function Landing({ userId }: { userId: any }) {
           </div>
         </div>
       </section>
+      <Features />
       <Pricing />
       <Footer />
     </>

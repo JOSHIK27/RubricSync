@@ -2,7 +2,7 @@ import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 export default function Pricing() {
   return (
-    <section className="">
+    <section>
       <div className="my-6">
         <h1 className="text-center text-[36px] text-[#484642] font-[900]">
           Pricing

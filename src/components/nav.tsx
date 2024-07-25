@@ -1,7 +1,7 @@
 import { Button } from "./ui/button";
 import Landing from "@/components/landing";
 import { auth } from "@clerk/nextjs/server";
-import { SignInButton, SignOutButton } from "@clerk/nextjs";
+import { SignOutButton } from "@clerk/nextjs";
 import Link from "next/link";
 export default function Nav() {
   const { userId } = auth();

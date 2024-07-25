@@ -71,7 +71,7 @@ export default function Nav() {
           </path>
         </g>
       </svg>
-      <div className="my-2 mr-20">
+      <div className="my-2 mr-4">
         {!userId ? (
           <Link href={"/sign-in"}>
             <Button className="border-1 border-neutral-600 px-4 bg-[#F0EBE3] hover:bg-[#cbc6bf] shadow-lg  text-black py-2 text-[16px] rounded-none">

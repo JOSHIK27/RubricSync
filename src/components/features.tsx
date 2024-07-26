@@ -1,4 +1,5 @@
 import thesis from "../../public/Thesis-bro.svg";
+import report from "../../public/Browser stats-rafiki.svg";
 import Image from "next/image";
 import { Card } from "./ui/card";
 import { motion } from "framer-motion";
@@ -6,7 +7,12 @@ import { motion } from "framer-motion";
 export default function Features() {
   return (
     <section className="mb-20">
-      <div className="flex justify-center flex-wrap mb-20">
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 2, ease: "easeInOut" }}
+        className="flex justify-center flex-wrap mb-20"
+      >
         <Image src={thesis} width={500} height={500} alt="loading"></Image>
         <div className="w-[500px]">
           <div className="p-4">
@@ -88,7 +94,95 @@ export default function Features() {
             comprehensive feedback.
           </p>
         </div>
-      </div>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 2, ease: "easeInOut" }}
+        className="flex justify-center flex-wrap mb-20"
+      >
+        <div className="w-[500px]">
+          <div className="p-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="2em"
+              height="2em"
+              viewBox="0 0 24 24"
+            >
+              <g fill="none" stroke="currentColor" stroke-linecap="round">
+                <g stroke-dasharray="10" stroke-dashoffset="10">
+                  <circle cx="5" cy="5" r="1.5">
+                    <animate
+                      fill="freeze"
+                      attributeName="stroke-dashoffset"
+                      dur="0.2s"
+                      values="10;0"
+                    />
+                  </circle>
+                  <circle cx="5" cy="12" r="1.5">
+                    <animate
+                      fill="freeze"
+                      attributeName="stroke-dashoffset"
+                      begin="0.7s"
+                      dur="0.2s"
+                      values="10;0"
+                    />
+                  </circle>
+                  <circle cx="5" cy="19" r="1.5">
+                    <animate
+                      fill="freeze"
+                      attributeName="stroke-dashoffset"
+                      begin="1.4s"
+                      dur="0.2s"
+                      values="10;0"
+                    />
+                  </circle>
+                </g>
+                <g stroke-dasharray="28" stroke-dashoffset="28">
+                  <rect width="11" height="3" x="9.5" y="3.5" rx="1.5">
+                    <animate
+                      fill="freeze"
+                      attributeName="stroke-dashoffset"
+                      begin="0.1s"
+                      dur="0.5s"
+                      values="28;0"
+                    />
+                  </rect>
+                  <rect width="11" height="3" x="9.5" y="10.5" rx="1.5">
+                    <animate
+                      fill="freeze"
+                      attributeName="stroke-dashoffset"
+                      begin="0.8s"
+                      dur="0.5s"
+                      values="28;0"
+                    />
+                  </rect>
+                  <rect width="11" height="3" x="9.5" y="17.5" rx="1.5">
+                    <animate
+                      fill="freeze"
+                      attributeName="stroke-dashoffset"
+                      begin="1.5s"
+                      dur="0.5s"
+                      values="28;0"
+                    />
+                  </rect>
+                </g>
+              </g>
+            </svg>
+            <h1 className="text-left text-[36px] text-[#484642] font-[900]">
+              How ?
+            </h1>
+          </div>
+          <p className="text-[#484642] p-4 text-[16px]">
+            One big problem that every Masters/PhD student while submitting
+            their thesis/report is, comparing it with long and overwhelming. How
+            cool it would be to automate this process by using an AI powered
+            application that syncs your rubric and report to provide
+            comprehensive feedback.
+          </p>
+        </div>
+        <Image src={report} alt="err" />
+      </motion.div>
       <div className="flex justify-evenly flex-wrap">
         <motion.div
           initial={{ y: 100 }}
@@ -99,8 +193,8 @@ export default function Features() {
             <div className="p-4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="1.2em"
-                height="1.2em"
+                width="2em"
+                height="2em"
                 viewBox="0 0 256 256"
               >
                 <g

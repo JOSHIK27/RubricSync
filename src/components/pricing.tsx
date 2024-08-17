@@ -16,7 +16,7 @@ export default function Pricing() {
         <motion.div
           initial={{ y: 100 }}
           whileInView={{ y: 0 }}
-          transition={{ duration: 1, ease: "easeInOut" }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
           className="m-6"
         >
           <Card className="p-8 w-[400px] border-[1px] transition-all duration-300 ease-in-out hover:scale-105 border-[#d3d1ce] bg-[#e8e6e5]">
@@ -100,7 +100,7 @@ export default function Pricing() {
         <motion.div
           initial={{ y: 100 }}
           whileInView={{ y: 0 }}
-          transition={{ duration: 1, ease: "easeInOut" }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
           className="m-6"
         >
           <Card className="p-8  w-[400px] border-[1px] border-[#d3d1ce] bg-[#e8e6e5] transition-all duration-300 ease-in-out hover:scale-105">

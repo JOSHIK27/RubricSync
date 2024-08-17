@@ -187,7 +187,7 @@ export default function Features() {
         <motion.div
           initial={{ y: 100 }}
           whileInView={{ y: 0 }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
         >
           <Card className="m-4 shadow-md w-80 h-20 transition-all duration-300 ease-in-out hover:scale-105">
             <div className="p-4">
@@ -220,7 +220,7 @@ export default function Features() {
         <motion.div
           initial={{ y: 100 }}
           whileInView={{ y: 0 }}
-          transition={{ duration: 0.7, ease: "easeInOut" }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
         >
           <Card className="m-4 shadow-md w-80 h-20 transition-all duration-300 ease-in-out hover:scale-105">
             <div className="p-4">
@@ -245,7 +245,7 @@ export default function Features() {
         <motion.div
           initial={{ y: 100 }}
           whileInView={{ y: 0 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
         >
           <Card className="m-4 shadow-md w-80 h-20 transition-all duration-300 ease-in-out hover:scale-105">
             <div className="p-4">
@@ -270,7 +270,7 @@ export default function Features() {
         <motion.div
           initial={{ y: 100 }}
           whileInView={{ y: 0 }}
-          transition={{ duration: 0.9, ease: "easeInOut" }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
         >
           <Card className="m-4 shadow-md w-80 h-20 transition-all duration-300 ease-in-out hover:scale-105">
             <div className="p-4">

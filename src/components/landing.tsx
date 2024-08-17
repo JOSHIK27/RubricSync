@@ -36,7 +36,19 @@ export default function Landing({ userId }: { userId: any }) {
                   variant="outline"
                   className="bg-[#4d4d50] shadow-lg  text-[#E6E4E3] border-0 hover:bg-[#3f3f4a] hover:text-white mt-8 px-12 py-2 text-[16px] rounded-none font-light"
                 >
-                  Sync Now <svg xmlns="http://www.w3.org/2000/svg" className = "ml-2"width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="currentColor" d="M12.01 4V1l-4 4l4 4V6c3.31 0 6 2.69 6 6c0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0 0 20.01 12c0-4.42-3.58-8-8-8m0 14c-3.31 0-6-2.69-6-6c0-1.01.25-1.97.7-2.8L5.25 7.74A7.93 7.93 0 0 0 4.01 12c0 4.42 3.58 8 8 8v3l4-4l-4-4z"/></svg>
+                  Sync Now{" "}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="ml-2"
+                    width="1.2em"
+                    height="1.2em"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M12.01 4V1l-4 4l4 4V6c3.31 0 6 2.69 6 6c0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0 0 20.01 12c0-4.42-3.58-8-8-8m0 14c-3.31 0-6-2.69-6-6c0-1.01.25-1.97.7-2.8L5.25 7.74A7.93 7.93 0 0 0 4.01 12c0 4.42 3.58 8 8 8v3l4-4l-4-4z"
+                    />
+                  </svg>
                 </Button>
               </DrawerTrigger>
               <DrawerContent>
@@ -46,23 +58,6 @@ export default function Landing({ userId }: { userId: any }) {
                 </Card>
               </DrawerContent>
             </Drawer>
-            {/* {!userId ? (
-              <div>
-                <Link href={"/sign-in"}>
-                  <Button className="border-1 border-neutral-600 ml-2 bg-[#F0EBE3] hover:bg-[#cbc6bf] shadow-lg  text-black mt-8 px-12 py-2 text-[16px] rounded-none">
-                    Sign In
-                  </Button>
-                </Link>
-              </div>
-            ) : (
-              <SignOutButton>
-                <div>
-                  <Button className="border-1 border-neutral-600 ml-2 bg-[#F0EBE3] hover:bg-[#cbc6bf] shadow-lg  text-black mt-8 px-12 py-2 text-[16px] rounded-none">
-                    Sign Out
-                  </Button>
-                </div>
-              </SignOutButton>
-            )} */}
           </div>
         </div>
       </section>

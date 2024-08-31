@@ -39,7 +39,7 @@ export default function Landing({ userId }: { userId: any }) {
                   Sync Now{" "}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="ml-2"
+                    className="ml-2 animate-spin"
                     width="1.2em"
                     height="1.2em"
                     viewBox="0 0 24 24"

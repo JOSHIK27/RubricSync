@@ -56,7 +56,7 @@ export default function Pricing() {
           Choose the perfect plan to elevate your academic writing experience
         </h2>
       </div>
-      <div className="flex justify-center flex-wrap gap-8">
+      <div className="flex justify-center flex-wrap gap-6">
         {plans.map((plan, index) => (
           <PricingCard key={index} plan={plan} delay={index * 0.2} />
         ))}
@@ -71,10 +71,10 @@ function PricingCard({ plan, delay }: { plan: Plan; delay: number }) {
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut", delay }}
-      className="flex-1 max-w-xl"
+      className="flex max-w-xl"
     >
       <Card
-        className={`p-8 h-full border-3 transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl ${
+        className={`p-8 h-full border-3 transition-all duration-300 ease-in-out hover:shadow-2xl ${
           plan.highlight ? "border-[#ffd700]" : "border-[#d3d1ce]"
         } bg-white relative overflow-hidden`}
       >
@@ -98,7 +98,7 @@ function PricingCard({ plan, delay }: { plan: Plan; delay: number }) {
           <p className="text-lg text-[#6b6967] font-medium mb-8">
             {plan.description}
           </p>
-          <ul className="space-y-4 mb-8 flex-grow">
+          <ul className="space-y-2 mb-6 flex-grow">
             {plan.features.map((feature, index) => (
               <li key={index} className="flex items-center">
                 <svg

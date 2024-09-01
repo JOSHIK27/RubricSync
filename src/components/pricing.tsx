@@ -74,13 +74,13 @@ function PricingCard({ plan, delay }: { plan: Plan; delay: number }) {
       className="flex max-w-xl"
     >
       <Card
-        className={`p-8 h-full border-3 transition-all duration-300 ease-in-out hover:shadow-2xl ${
+        className={`p-8 m-2 h-full border-3 transition-all duration-300 ease-in-out hover:shadow-2xl ${
           plan.highlight ? "border-[#ffd700]" : "border-[#d3d1ce]"
         } bg-white relative overflow-hidden`}
       >
         {plan.highlight && (
-          <div className="absolute top-0 right-0 bg-[#ffd700] text-[#484642] py-2 px-6 transform rotate-45 translate-x-8 -translate-y-3 text-sm font-bold">
-            {plan.highlight}
+          <div className="absolute -top-1 -right-8 w-40 text-center bg-[#ffd700] text-[#484642] pl-10 py-1 transform rotate-45 text-sm font-bold shadow-md">
+            <span className="block w-full px-4">{plan.highlight}</span>
           </div>
         )}
         <div className="flex flex-col h-full">

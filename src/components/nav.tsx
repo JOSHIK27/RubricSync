@@ -7,7 +7,7 @@ export default function Nav() {
   const { userId } = auth();
 
   return (
-    <nav className="bg-gradient-to-r from-stone-200 to-stone-300 shadow-md mb-8">
+    <nav className="bg-gradient-to-r from-stone-200 to-stone-300 shadow-md mb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex-shrink-0 flex items-center">

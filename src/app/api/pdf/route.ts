@@ -4,8 +4,8 @@ import pdf from "pdf-parse";
 import { Document } from "@langchain/core/documents";
 import { openai } from "@/lib/openai";
 import { render_page } from "@/lib/utils";
-import { OpenAIEmbeddings } from "@langchain/openai";
 import { ExtractRubricCriteria } from "@/lib/prompts";
+import { CalculateSimilarityScore } from "@/lib/evaluator";
 
 export async function POST(req: Request) {
   try {
@@ -32,14 +32,8 @@ export async function POST(req: Request) {
     const rubricContent = await splitter.splitDocuments([
       new Document({ pageContent: rubricData.text }),
     ]);
-    console.log(rubricData.text);
-
-    const resp = await ExtractRubricCriteria(rubricData.text);
-
-    console.log(resp.choices[0].message);
 
     const reportEmbeddingVectorList = [];
-    const rubricEmbeddingVectorList = [];
 
     let num = 0;
     for (const context of reportContent) {
@@ -54,17 +48,17 @@ export async function POST(req: Request) {
       num = num + 1;
     }
 
-    num = 0;
-    for (const context of rubricContent) {
-      const response = await openai.embeddings.create({
-        input: context.pageContent,
+    const rubricArray = await ExtractRubricCriteria(rubricData.text);
+
+    for (const rubric in rubricArray) {
+      const rubricEmbedding = await openai.embeddings.create({
+        input: rubric,
         model: "text-embedding-ada-002",
       });
-      rubricEmbeddingVectorList.push({
-        id: `vec${num}`,
-        values: response.data[0].embedding,
-      });
-      num = num + 1;
+      console.log(
+        rubric,
+        CalculateSimilarityScore(rubricEmbedding, reportEmbeddingVectorList)
+      );
     }
 
     return NextResponse.json({ message: "OK" });
@@ -72,21 +66,3 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: error }, { status: 500 });
   }
 }
-
-// const pc = new Pinecone({
-//   apiKey: process.env.PINE_CONE_API_KEY ?? "",
-// });
-
-// const dbIndex = pc.index("rubricsync");
-
-// await dbIndex.namespace("reports").upsert(reportEmbeddingVectorList);
-// await dbIndex.namespace("rubrics").upsert(rubricEmbeddingVectorList);
-
-// const vectorStore = await PineconeStore.fromExistingIndex(
-//   new OpenAIEmbeddings(),
-//   { pineconeIndex: dbIndex }
-// );
-
-// const rubricCriteria = await vectorStore.similaritySearch("", 100);
-
-// console.log(rubricCriteria);

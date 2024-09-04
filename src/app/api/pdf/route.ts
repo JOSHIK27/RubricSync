@@ -2,13 +2,10 @@ import { NextResponse } from "next/server";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 import pdf from "pdf-parse";
 import { Document } from "@langchain/core/documents";
-import OpenAI from "openai";
+import { openai } from "@/lib/openai";
 import { render_page } from "@/lib/utils";
-import { Pinecone } from "@pinecone-database/pinecone";
-
-const pc = new Pinecone({ apiKey: process.env.PINE_CONE_API_KEY ?? "" });
-const dbIndex = pc.index("rubricsync");
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+import { OpenAIEmbeddings } from "@langchain/openai";
+import { ExtractRubricCriteria } from "@/lib/prompts";
 
 export async function POST(req: Request) {
   try {
@@ -35,6 +32,11 @@ export async function POST(req: Request) {
     const rubricContent = await splitter.splitDocuments([
       new Document({ pageContent: rubricData.text }),
     ]);
+    console.log(rubricData.text);
+
+    const resp = await ExtractRubricCriteria(rubricData.text);
+
+    console.log(resp.choices[0].message);
 
     const reportEmbeddingVectorList = [];
     const rubricEmbeddingVectorList = [];
@@ -65,11 +67,26 @@ export async function POST(req: Request) {
       num = num + 1;
     }
 
-    await dbIndex.namespace("reports").upsert(reportEmbeddingVectorList);
-    await dbIndex.namespace("rubrics").upsert(rubricEmbeddingVectorList);
-
     return NextResponse.json({ message: "OK" });
   } catch (error) {
     return NextResponse.json({ message: error }, { status: 500 });
   }
 }
+
+// const pc = new Pinecone({
+//   apiKey: process.env.PINE_CONE_API_KEY ?? "",
+// });
+
+// const dbIndex = pc.index("rubricsync");
+
+// await dbIndex.namespace("reports").upsert(reportEmbeddingVectorList);
+// await dbIndex.namespace("rubrics").upsert(rubricEmbeddingVectorList);
+
+// const vectorStore = await PineconeStore.fromExistingIndex(
+//   new OpenAIEmbeddings(),
+//   { pineconeIndex: dbIndex }
+// );
+
+// const rubricCriteria = await vectorStore.similaritySearch("", 100);
+
+// console.log(rubricCriteria);

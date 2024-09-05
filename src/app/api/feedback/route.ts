@@ -29,10 +29,6 @@ export async function POST(req: Request) {
       new Document({ pageContent: reportData.text }),
     ]);
 
-    const rubricContent = await splitter.splitDocuments([
-      new Document({ pageContent: rubricData.text }),
-    ]);
-
     const reportEmbeddingVectorList = [];
 
     let num = 0;
@@ -50,19 +46,33 @@ export async function POST(req: Request) {
 
     const rubricArray = await ExtractRubricCriteria(rubricData.text);
 
-    for (const rubric in rubricArray) {
+    const feedback: { [key: string]: number } = {};
+
+    for (const rubric of rubricArray.choices[0].message.content) {
       const rubricEmbedding = await openai.embeddings.create({
         input: rubric,
         model: "text-embedding-ada-002",
       });
-      console.log(
-        rubric,
-        CalculateSimilarityScore(rubricEmbedding, reportEmbeddingVectorList)
-      );
+      let score = 0;
+      for (const reportEmbeddingItem of reportEmbeddingVectorList) {
+        console.log(
+          reportEmbeddingItem.values,
+          rubricEmbedding.data[0].embedding
+        );
+        score =
+          score +
+          CalculateSimilarityScore(
+            reportEmbeddingItem.values,
+            rubricEmbedding.data[0].embedding
+          );
+      }
+      score = score / reportEmbeddingVectorList.length;
+      feedback[rubric] = score;
     }
 
-    return NextResponse.json({ message: "OK" });
+    return NextResponse.json({ feedback });
   } catch (error) {
+    console.log(error);
     return NextResponse.json({ message: error }, { status: 500 });
   }
 }

@@ -46,7 +46,7 @@ export default function FileUpload() {
     const rubricDataBuffer = Buffer.from(rubricBytes);
 
     try {
-      fetch("api/pdf", {
+      fetch("api/feedback", {
         method: "POST",
         body: JSON.stringify({
           reportDataBuffer,
@@ -58,6 +58,7 @@ export default function FileUpload() {
           return response.json();
         })
         .then((message) => {
+          console.log(message);
           setLoading(false);
           setFeedback(message.feedback);
         });

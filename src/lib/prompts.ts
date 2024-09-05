@@ -12,7 +12,7 @@ export async function ExtractRubricCriteria(rubric: String) {
  
   `;
 
-  const result = await openai.chat.completions.create({
+  const result: any = await openai.chat.completions.create({
     messages: [
       {
         role: "assistant",

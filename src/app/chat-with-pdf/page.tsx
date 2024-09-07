@@ -8,10 +8,7 @@ import { useAuth } from "@clerk/nextjs";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.mjs",
-  import.meta.url
-).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 interface AIResponse {
   id: number;
@@ -29,11 +26,29 @@ export default function Test() {
   const tooltipRef = useRef<HTMLDivElement>(null);
   const { isLoaded, userId } = useAuth();
   const router = useRouter();
-  if (!isLoaded) {
-    return <></>;
-  } else if (!userId) {
-    router.push("/sign-in");
-  }
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        tooltipRef.current &&
+        !tooltipRef.current.contains(event.target as Node)
+      ) {
+        setSelectedText("");
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    if (!userId) {
+      router.push("/sign-in");
+    }
+  }, [isLoaded, userId, router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -85,21 +100,9 @@ export default function Test() {
     setSelectedText("");
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        tooltipRef.current &&
-        !tooltipRef.current.contains(event.target as Node)
-      ) {
-        setSelectedText("");
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  if (!isLoaded) {
+    return <></>;
+  }
 
   return (
     <div className="min-h-screen bg-stone-100 mx-12 rounded-lg py-8 px-4 sm:px-6 lg:px-8">

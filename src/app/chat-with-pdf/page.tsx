@@ -1,6 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
+import { pdfjs } from "react-pdf";
 
 const DynamicPDFViewer = dynamic(() => import("./pdf-viewer"), {
   ssr: false,

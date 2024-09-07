@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Card } from "./ui/card";
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 export const FadeIn = ({ children }: { children: React.ReactNode }) => (
   <motion.div
@@ -143,18 +144,20 @@ export default function Features() {
           {/* Card 2 */}
           <Card className="p-6 bg-white shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl">
             <div className="flex flex-col items-center text-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="2.5em"
-                height="2.5em"
-                viewBox="0 0 24 24"
-                className="text-blue-600 mb-4"
-              >
-                <path
-                  fill="currentColor"
-                  d="M2 22V4q0-.825.588-1.412T4 2h16q.825 0 1.413.588T22 4v12q0 .825-.587 1.413T20 18H6zm4-8h8v-2H6zm0-3h12V9H6zm0-3h12V6H6z"
-                />
-              </svg>
+              <Link href="/chat-with-pdf">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="2.5em"
+                  height="2.5em"
+                  viewBox="0 0 24 24"
+                  className="text-blue-600 mb-4 cursor-pointer"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M2 22V4q0-.825.588-1.412T4 2h16q.825 0 1.413.588T22 4v12q0 .825-.587 1.413T20 18H6zm4-8h8v-2H6zm0-3h12V9H6zm0-3h12V6H6z"
+                  />
+                </svg>
+              </Link>
               <h3 className="text-xl font-bold text-zinc-800 mb-2">
                 Chat with PDF
               </h3>

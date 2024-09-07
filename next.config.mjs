@@ -3,20 +3,16 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ["pdf-parse"],
   },
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
     config.module.rules.push({
-      test: /\.pdf$/,
-      use: [
-        {
-          loader: "file-loader",
-          options: {
-            name: "[path][name].[ext]",
-          },
-        },
-      ],
+      test: /pdf\.worker\.min\.mjs/,
+      type: "asset/resource",
+      generator: {
+        filename: "static/worker/[hash][ext][query]",
+      },
     });
+
     return config;
   },
 };
-
 export default nextConfig;

@@ -1,16 +1,18 @@
 "use client";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-import { pdfjs } from "react-pdf";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const DynamicPDFViewer = dynamic(() => import("./pdf-viewer"), {
   ssr: false,
-  loading: () => <p>Loading PDF viewer...</p>,
+  loading: () => <Skeleton className="w-[100px] h-[20px] rounded-full" />,
 });
 
 export default function ChatWithPDFPage() {
   return (
-    <Suspense fallback={<p>Loading PDF viewer...</p>}>
+    <Suspense
+      fallback={<Skeleton className="w-[100px] h-[20px] rounded-full" />}
+    >
       <DynamicPDFViewer />
     </Suspense>
   );

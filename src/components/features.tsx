@@ -115,28 +115,19 @@ export default function Features() {
                 xmlns="http://www.w3.org/2000/svg"
                 width="2.5em"
                 height="2.5em"
-                viewBox="0 0 256 256"
+                viewBox="0 0 24 24"
                 className="text-green-600 mb-4"
               >
-                <g
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="16"
-                >
-                  <path d="m 127.99999,239.96468 c 0,0 95.98506,-31.99503 95.98506,-111.98257" />
-                  <path d="M 223.98505,127.98211 V 31.997059 c 0,0 -31.99502,-15.997511 -95.98506,-15.997511" />
-                  <path d="m 128,239.96468 c 0,0 -95.985056,-31.99503 -95.985056,-111.98257" />
-                  <path d="M 32.014944,127.98211 V 31.997059 c 0,0 31.995019,-15.997509 95.985056,-15.997509" />
-                  <path d="M 191.99003,63.99208 C 128,111.9846 112.00249,175.97464 112.00249,175.97464 c 0,0 -15.997511,-19.0946 -31.995019,-31.99502" />
-                </g>
+                <path
+                  fill="currentColor"
+                  d="M13 9h5.5L13 3.5V9M6 2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.11.89-2 2-2m9 16v-2H6v2h9m3-4v-2H6v2h12z"
+                />
               </svg>
               <h3 className="text-xl font-bold text-zinc-800 mb-2">
-                Open Source
+                Export Chat
               </h3>
               <p className="text-zinc-600 text-sm">
-                Transparent and community-driven development
+                Save and share your PDF chat conversations
               </p>
             </div>
           </Card>

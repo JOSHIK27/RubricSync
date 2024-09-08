@@ -18,7 +18,6 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        {/* bg-gradient-to-r from-stone-200 to-stone-500 */}
         <body className={`${inter.className} bg-stone-300`}>
           <Nav />
           {children}

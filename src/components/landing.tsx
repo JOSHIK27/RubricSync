@@ -11,7 +11,7 @@ import Footer from "./footer";
 import Features from "./features";
 import Faqs from "./faqs";
 
-export default function Landing({ userId }: { userId: any }) {
+export default function Landing() {
   return (
     <>
       <section className="flex items-center justify-center mb-32">

@@ -1,4 +1,4 @@
-import { openai } from "./openai";
+import { openai } from "../lib/openai";
 
 export async function ExtractRubricCriteria(rubric: String) {
   const prompt = `Read the following Marking Rubric very carefully: ${rubric}. 

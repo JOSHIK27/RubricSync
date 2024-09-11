@@ -14,6 +14,7 @@ import {
   SparklesIcon,
 } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface AIResponse {
   id: number;
@@ -50,12 +51,12 @@ export default function Test() {
     };
   }, []);
 
-  useEffect(() => {
-    if (!isLoaded) return;
-    if (!userId) {
-      router.push("/sign-in");
-    }
-  }, [isLoaded, userId, router]);
+  // useEffect(() => {
+  //   if (!isLoaded) return;
+  //   if (!userId) {
+  //     router.push("/sign-in");
+  //   }
+  // }, [isLoaded, userId, router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -106,10 +107,6 @@ export default function Test() {
     setAiResponses((prev) => [...prev, newResponse]);
     setSelectedText("");
   };
-
-  if (!isLoaded) {
-    return <></>;
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f5f3f2] to-white">

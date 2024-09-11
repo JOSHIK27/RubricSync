@@ -22,7 +22,10 @@ export default function Features() {
       <div className="container mx-auto px-4 md:px-8 lg:px-16">
         <FadeIn>
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-zinc-800 leading-tight">
-            Revolutionizing <span className="text-zinc-600">Thesis Review</span>
+            Revolutionizing{" "}
+            <span className="bg-gradient-to-r from-zinc-600 to-zinc-800 bg-clip-text text-transparent">
+              Thesis Review
+            </span>
           </h2>
         </FadeIn>
 

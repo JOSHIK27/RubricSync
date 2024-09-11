@@ -4,8 +4,10 @@ import pdf from "pdf-parse";
 import { Document } from "@langchain/core/documents";
 import { openai } from "@/lib/openai";
 import { render_page } from "@/lib/utils";
-import { ExtractRubricCriteria } from "@/utils/prompts";
-import { CalculateSimilarityScore } from "@/utils/evaluator";
+import {
+  ExtractRubricCriteria,
+  CalculateSimilarityScore,
+} from "../../../utils/index";
 
 export async function POST(req: Request) {
   try {

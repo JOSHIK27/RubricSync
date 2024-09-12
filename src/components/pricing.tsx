@@ -1,3 +1,4 @@
+"use client";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { motion } from "framer-motion";
@@ -121,6 +122,11 @@ function PricingCard({ plan, delay }: { plan: Plan; delay: number }) {
           </ul>
           <Button
             className={`w-full py-6 text-lg font-semibold ${plan.buttonClass} transition-colors duration-300`}
+            onClick={() => {
+              if (plan.buttonText === "Join Waitlist") {
+                window.open("https://buy.stripe.com/test_eVa8xfa4Ug6bbL2fYY");
+              }
+            }}
           >
             {plan.buttonText}
           </Button>

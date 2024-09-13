@@ -1,8 +1,6 @@
 "use client";
 import ReactLoading from "react-loading";
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const DynamicPDFViewer = dynamic(() => import("./pdf-viewer"), {
   ssr: false,

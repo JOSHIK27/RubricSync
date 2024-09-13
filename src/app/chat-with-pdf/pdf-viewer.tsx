@@ -5,7 +5,6 @@ import { useState, useRef, useEffect } from "react";
 import { pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-import { useAuth } from "@clerk/nextjs";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -13,8 +12,6 @@ import {
   ArrowUpTrayIcon,
   SparklesIcon,
 } from "@heroicons/react/24/solid";
-import { useRouter } from "next/navigation";
-import { Skeleton } from "@/components/ui/skeleton";
 
 interface AIResponse {
   id: number;
@@ -24,16 +21,17 @@ interface AIResponse {
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
-export default function Test() {
-  const [file, setFile] = useState<File | null>(null);
+export default function PDFViewer() {
+  const [reportFile, setReportFile] = useState<File | null>(null);
+  const [rubricFile, setRubricFile] = useState<File | null>(null);
   const [numPages, setNumPages] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [selectedText, setSelectedText] = useState("");
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const [aiResponses, setAiResponses] = useState<AIResponse[]>([]);
   const tooltipRef = useRef<HTMLDivElement>(null);
-  const { isLoaded, userId } = useAuth();
-  const router = useRouter();
+  const [reportBuffer, setReportBuffer] = useState<Buffer | null>(null);
+  const [rubricBuffer, setRubricBuffer] = useState<Buffer | null>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -51,19 +49,22 @@ export default function Test() {
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (!isLoaded) return;
-  //   if (!userId) {
-  //     router.push("/sign-in");
-  //   }
-  // }, [isLoaded, userId, router]);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const fileInput = document.getElementById("sample") as HTMLInputElement;
-    if (!fileInput.files) return;
-    const selectedFile = fileInput.files[0];
-    setFile(selectedFile);
+    const reportInput = document.getElementById("report") as HTMLInputElement;
+    const rubricInput = document.getElementById("rubric") as HTMLInputElement;
+    if (reportInput.files) {
+      setReportFile(reportInput.files[0]);
+      const reportBytes = await reportInput.files[0].arrayBuffer();
+      const reportBuffer = Buffer.from(reportBytes);
+      setReportBuffer(reportBuffer);
+    }
+    if (rubricInput.files) {
+      setRubricFile(rubricInput.files[0]);
+      const rubricBytes = await rubricInput.files[0].arrayBuffer();
+      const rubricBuffer = Buffer.from(rubricBytes);
+      setRubricBuffer(rubricBuffer);
+    }
   };
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
@@ -98,14 +99,27 @@ export default function Test() {
     }
   };
 
-  const handleImproveWithAI = () => {
-    const newResponse: AIResponse = {
-      id: Date.now(),
-      originalText: selectedText,
-      improvedText: `Improved: ${selectedText}`,
-    };
-    setAiResponses((prev) => [...prev, newResponse]);
-    setSelectedText("");
+  const handleImproveWithAI = async () => {
+    const response = await fetch("/api/improveText", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        originalText: selectedText,
+        criterion: rubricBuffer,
+      }),
+    });
+
+    const data = await response.json();
+    setAiResponses([
+      ...aiResponses,
+      {
+        id: aiResponses.length + 1,
+        originalText: selectedText,
+        improvedText: data,
+      },
+    ]);
   };
 
   return (
@@ -119,10 +133,10 @@ export default function Test() {
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="w-full lg:w-2/3">
             <div className="bg-white shadow-lg rounded-lg overflow-hidden border-3 border-[#d3d1ce] hover:shadow-2xl transition-all duration-300">
-              {file ? (
+              {reportFile ? (
                 <div className="p-6">
                   <Document
-                    file={file}
+                    file={reportFile}
                     onLoadSuccess={onDocumentLoadSuccess}
                     className="mb-6"
                   >
@@ -164,18 +178,40 @@ export default function Test() {
               ) : (
                 <div className="p-6">
                   <form onSubmit={handleSubmit} className="space-y-4">
-                    <input
-                      id="sample"
-                      type="file"
-                      accept="application/pdf"
-                      className="block w-full text-sm text-[#6b6967] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#f5f3f2] file:text-[#484642] hover:file:bg-[#e5e3e2]"
-                    />
+                    <div>
+                      <label
+                        htmlFor="report"
+                        className="block text-sm font-medium text-[#484642] mb-2"
+                      >
+                        Upload Report (PDF)
+                      </label>
+                      <input
+                        id="report"
+                        type="file"
+                        accept="application/pdf"
+                        className="block w-full text-sm text-[#6b6967] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#f5f3f2] file:text-[#484642] hover:file:bg-[#e5e3e2]"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="rubric"
+                        className="block text-sm font-medium text-[#484642] mb-2"
+                      >
+                        Upload Rubric (PDF)
+                      </label>
+                      <input
+                        id="rubric"
+                        type="file"
+                        accept="application/pdf"
+                        className="block w-full text-sm text-[#6b6967] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#f5f3f2] file:text-[#484642] hover:file:bg-[#e5e3e2]"
+                      />
+                    </div>
                     <button
                       type="submit"
                       className="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#282624] hover:bg-[#3f3e3a] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#282624]"
                     >
                       <ArrowUpTrayIcon className="h-5 w-5 mr-2" />
-                      Upload PDF
+                      Upload Files
                     </button>
                   </form>
                 </div>

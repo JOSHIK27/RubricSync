@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
-import pdf from "pdf-parse";
 import { Document } from "@langchain/core/documents";
 import { openai } from "@/lib/openai";
-import { render_page } from "@/lib/utils";
 import {
   ExtractRubricCriteria,
   CalculateSimilarityScore,
@@ -13,13 +11,9 @@ export async function POST(req: Request) {
   try {
     const { reportDataBuffer, rubricDataBuffer } = await req.json();
 
-    const reportData = await pdf(reportDataBuffer, {
-      pagerender: render_page,
-    });
+    const reportData = await textExtractor(reportDataBuffer);
 
-    const rubricData = await pdf(rubricDataBuffer, {
-      pagerender: render_page,
-    });
+    const rubricData = await textExtractor(rubricDataBuffer);
 
     const splitter = new RecursiveCharacterTextSplitter({
       chunkSize: 8192,
@@ -28,7 +22,7 @@ export async function POST(req: Request) {
     });
 
     const reportContent = await splitter.splitDocuments([
-      new Document({ pageContent: reportData.text }),
+      new Document({ pageContent: reportData }),
     ]);
 
     const reportEmbeddingVectorList = [];
@@ -46,7 +40,7 @@ export async function POST(req: Request) {
       num = num + 1;
     }
 
-    const rubricArray = await ExtractRubricCriteria(rubricData.text);
+    const rubricArray = await ExtractRubricCriteria(rubricData);
 
     const feedback: { [key: string]: number } = {};
 
@@ -77,4 +71,15 @@ export async function POST(req: Request) {
     console.log(error);
     return NextResponse.json({ message: error }, { status: 500 });
   }
+}
+
+import pdf from "pdf-parse";
+import { render_page } from "@/lib/utils";
+
+export async function textExtractor(pdfBuffer: Buffer) {
+  const pdfData = await pdf(pdfBuffer, {
+    pagerender: render_page,
+  });
+
+  return pdfData.text;
 }

@@ -6,6 +6,8 @@ import {
   ExtractRubricCriteria,
   CalculateSimilarityScore,
 } from "../../../utils/index";
+import pdf from "pdf-parse";
+import { render_page } from "@/lib/utils";
 
 export async function POST(req: Request) {
   try {
@@ -73,10 +75,7 @@ export async function POST(req: Request) {
   }
 }
 
-import pdf from "pdf-parse";
-import { render_page } from "@/lib/utils";
-
-export async function textExtractor(pdfBuffer: Buffer) {
+async function textExtractor(pdfBuffer: Buffer) {
   const pdfData = await pdf(pdfBuffer, {
     pagerender: render_page,
   });

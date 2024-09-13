@@ -25,7 +25,7 @@ export async function POST(req: Request) {
   }
 }
 
-export async function textExtractor(pdfBuffer: Buffer) {
+async function textExtractor(pdfBuffer: Buffer) {
   const pdfData = await pdf(pdfBuffer, {
     pagerender: render_page,
   });

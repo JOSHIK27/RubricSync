@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { supabase } from "@/lib";
 
 export async function POST(req: Request) {
   const body = await req.text();
+
   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "");

@@ -131,7 +131,7 @@ export default function PDFViewer() {
         </h1>
 
         <div className="flex flex-col lg:flex-row gap-8">
-          <div className="w-full lg:w-2/3">
+          <div className="w-full lg:w-[60%]">
             <div className="bg-white shadow-lg rounded-lg overflow-hidden border-3 border-[#d3d1ce] hover:shadow-2xl transition-all duration-300">
               {reportFile ? (
                 <div className="p-6">
@@ -145,7 +145,7 @@ export default function PDFViewer() {
                         pageNumber={pageNumber}
                         renderTextLayer={true}
                         renderAnnotationLayer={false}
-                        className="max-w-full h-auto"
+                        className="w-full h-auto"
                       />
                     </div>
                   </Document>
@@ -219,7 +219,7 @@ export default function PDFViewer() {
             </div>
           </div>
 
-          <div className="w-full lg:w-1/3">
+          <div className="w-full lg:w-[40%] max-h-screen overflow-y-scroll">
             <div className="bg-white shadow-lg rounded-lg overflow-hidden border-3 border-[#d3d1ce] hover:shadow-2xl transition-all duration-300">
               <div className="p-6">
                 <h2 className="text-2xl font-semibold text-[#484642] mb-4 flex items-center">

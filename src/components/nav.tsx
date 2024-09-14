@@ -30,13 +30,13 @@ export default function Nav() {
           <div className="flex items-center">
             {!userId ? (
               <Link href="/sign-in">
-                <Button className="bg-stone-700 hover:bg-stone-800 text-white font-medium py-2 px-4 rounded-md transition duration-150 ease-in-out">
+                <Button className="sign-in-btn bg-stone-700 hover:bg-stone-800 text-white font-medium py-2 px-4 rounded-md transition duration-150 ease-in-out">
                   Sign In
                 </Button>
               </Link>
             ) : (
               <SignOutButton>
-                <Button className="bg-stone-100 hover:bg-stone-200 text-stone-800 font-medium py-2 px-4 rounded-md transition duration-150 ease-in-out">
+                <Button className="sign-out-btn bg-stone-100 hover:bg-stone-200 text-stone-800 font-medium py-2 px-4 rounded-md transition duration-150 ease-in-out">
                   Sign Out
                 </Button>
               </SignOutButton>

@@ -2,6 +2,7 @@ import { Button } from "./ui/button";
 import { auth } from "@clerk/nextjs/server";
 import { SignOutButton } from "@clerk/nextjs";
 import Link from "next/link";
+import { UserButton } from "@clerk/nextjs";
 
 export default function Nav() {
   const { userId } = auth();
@@ -35,11 +36,7 @@ export default function Nav() {
                 </Button>
               </Link>
             ) : (
-              <SignOutButton>
-                <Button className="sign-out-btn bg-stone-100 hover:bg-stone-200 text-stone-800 font-medium py-2 px-4 rounded-md transition duration-150 ease-in-out">
-                  Sign Out
-                </Button>
-              </SignOutButton>
+              <UserButton />
             )}
           </div>
         </div>

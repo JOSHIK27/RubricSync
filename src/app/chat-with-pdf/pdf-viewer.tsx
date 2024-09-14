@@ -12,10 +12,11 @@ import {
   ArrowUpTrayIcon,
   SparklesIcon,
 } from "@heroicons/react/24/solid";
+import ReactLoading from "react-loading";
+import { motion } from "framer-motion";
 
 interface AIResponse {
   id: number;
-  originalText: string;
   improvedText: string;
 }
 
@@ -32,6 +33,7 @@ export default function PDFViewer() {
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [reportBuffer, setReportBuffer] = useState<Buffer | null>(null);
   const [rubricBuffer, setRubricBuffer] = useState<Buffer | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -100,6 +102,7 @@ export default function PDFViewer() {
   };
 
   const handleImproveWithAI = async () => {
+    setIsLoading(true);
     const response = await fetch("/api/improveText", {
       method: "POST",
       headers: {
@@ -116,23 +119,35 @@ export default function PDFViewer() {
       ...aiResponses,
       {
         id: aiResponses.length + 1,
-        originalText: selectedText,
         improvedText: data,
       },
     ]);
+    setIsLoading(false);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f5f3f2] to-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <h1 className="text-5xl font-bold text-[#484642] mb-8 flex items-center">
-          <DocumentIcon className="h-12 w-12 mr-4 text-[#484642]" />
-          Chat with PDF
-        </h1>
+    <div className="min-h-screen bg-gradient-to-br from-stone-100 via-stone-200 to-stone-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-6xl font-extrabold text-stone-800 mb-10 flex items-center"
+        >
+          <DocumentIcon className="h-14 w-14 mr-5 text-stone-700" />
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-stone-700 to-stone-500">
+            Chat with PDF
+          </span>
+        </motion.h1>
 
-        <div className="flex flex-col lg:flex-row gap-8">
-          <div className="w-full lg:w-[60%]">
-            <div className="bg-white shadow-lg rounded-lg overflow-hidden border-3 border-[#d3d1ce] hover:shadow-2xl transition-all duration-300">
+        <div className="flex flex-col lg:flex-row gap-10">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="w-full lg:w-[60%]"
+          >
+            <div className="bg-white shadow-xl rounded-xl overflow-hidden border border-stone-300 hover:shadow-2xl transition-all duration-300">
               {reportFile ? (
                 <div className="p-6">
                   <Document
@@ -155,12 +170,12 @@ export default function PDFViewer() {
                       type="button"
                       disabled={pageNumber <= 1}
                       onClick={previousPage}
-                      className="inline-flex items-center px-4 py-2 border border-[#d3d1ce] text-sm font-medium rounded-md text-[#484642] bg-white hover:bg-[#f5f3f2] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#282624] disabled:opacity-50"
+                      className="inline-flex items-center px-4 py-2 border border-stone-300 text-sm font-medium rounded-md text-stone-700 bg-white hover:bg-stone-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-stone-500 disabled:opacity-50"
                     >
                       <ChevronLeftIcon className="h-5 w-5 mr-2" />
                       Previous
                     </button>
-                    <p className="text-sm text-[#6b6967]">
+                    <p className="text-sm text-stone-600">
                       Page {pageNumber || (numPages ? 1 : "--")} of{" "}
                       {numPages || "--"}
                     </p>
@@ -168,7 +183,7 @@ export default function PDFViewer() {
                       type="button"
                       disabled={pageNumber >= (numPages ? numPages : 0)}
                       onClick={nextPage}
-                      className="inline-flex items-center px-4 py-2 border border-[#d3d1ce] text-sm font-medium rounded-md text-[#484642] bg-white hover:bg-[#f5f3f2] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#282624] disabled:opacity-50"
+                      className="inline-flex items-center px-4 py-2 border border-stone-300 text-sm font-medium rounded-md text-stone-700 bg-white hover:bg-stone-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-stone-500 disabled:opacity-50"
                     >
                       Next
                       <ChevronRightIcon className="h-5 w-5 ml-2" />
@@ -181,7 +196,7 @@ export default function PDFViewer() {
                     <div>
                       <label
                         htmlFor="report"
-                        className="block text-sm font-medium text-[#484642] mb-2"
+                        className="block text-sm font-medium text-stone-700 mb-2"
                       >
                         Upload Report (PDF)
                       </label>
@@ -189,13 +204,13 @@ export default function PDFViewer() {
                         id="report"
                         type="file"
                         accept="application/pdf"
-                        className="block w-full text-sm text-[#6b6967] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#f5f3f2] file:text-[#484642] hover:file:bg-[#e5e3e2]"
+                        className="block w-full text-sm text-stone-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-stone-200 file:text-stone-700 hover:file:bg-stone-300"
                       />
                     </div>
                     <div>
                       <label
                         htmlFor="rubric"
-                        className="block text-sm font-medium text-[#484642] mb-2"
+                        className="block text-sm font-medium text-stone-700 mb-2"
                       >
                         Upload Rubric (PDF)
                       </label>
@@ -203,12 +218,12 @@ export default function PDFViewer() {
                         id="rubric"
                         type="file"
                         accept="application/pdf"
-                        className="block w-full text-sm text-[#6b6967] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#f5f3f2] file:text-[#484642] hover:file:bg-[#e5e3e2]"
+                        className="block w-full text-sm text-stone-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-stone-200 file:text-stone-700 hover:file:bg-stone-300"
                       />
                     </div>
                     <button
                       type="submit"
-                      className="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#282624] hover:bg-[#3f3e3a] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#282624]"
+                      className="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-stone-700 hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-stone-500"
                     >
                       <ArrowUpTrayIcon className="h-5 w-5 mr-2" />
                       Upload Files
@@ -217,37 +232,44 @@ export default function PDFViewer() {
                 </div>
               )}
             </div>
-          </div>
+          </motion.div>
 
-          <div className="w-full lg:w-[40%] max-h-screen overflow-y-scroll">
-            <div className="bg-white shadow-lg rounded-lg overflow-hidden border-3 border-[#d3d1ce] hover:shadow-2xl transition-all duration-300">
-              <div className="p-6">
-                <h2 className="text-2xl font-semibold text-[#484642] mb-4 flex items-center">
-                  <SparklesIcon className="h-6 w-6 mr-2 text-[#484642]" />
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="w-full lg:w-[40%] flex flex-col h-[calc(100vh-2rem)]"
+          >
+            <div className="bg-white shadow-xl rounded-xl overflow-hidden border border-stone-300 hover:shadow-2xl transition-all duration-300 flex-grow flex flex-col">
+              <div className="p-8 flex-shrink-0 bg-gradient-to-r from-stone-200 to-stone-300">
+                <h2 className="text-3xl font-bold text-stone-800 mb-4 flex items-center">
+                  <SparklesIcon className="h-8 w-8 mr-4 text-stone-700" />
                   AI Improvements
                 </h2>
-                {aiResponses.length === 0 ? (
-                  <p className="text-[#6b6967]">
-                    No improvements yet. Select text and click "Improve with AI"
-                    to get started.
-                  </p>
+              </div>
+              <div className="flex-grow mt-4 justify-center items-center overflow-y-auto px-6 pb-6">
+                {isLoading ? (
+                  <ReactLoading type={"bars"} color="#000" />
+                ) : aiResponses.length === 0 ? (
+                  <div className="text-center py-8">
+                    <SparklesIcon className="h-12 w-12 mx-auto text-stone-300 mb-4" />
+                    <p className="text-stone-600 text-lg">
+                      No improvements yet. Select text and click "Improve with
+                      AI" to get started.
+                    </p>
+                  </div>
                 ) : (
                   <div className="space-y-6">
-                    {aiResponses.map((response) => (
+                    {aiResponses.map((response, index) => (
                       <div
                         key={response.id}
-                        className="border-b border-[#d3d1ce] pb-4 last:border-b-0 last:pb-0"
+                        className="bg-white rounded-lg p-4 shadow-sm border border-stone-300"
                       >
-                        <h3 className="text-sm font-medium text-[#484642] mb-2">
-                          Original Text:
+                        <h3 className="text-sm font-medium text-stone-700 mb-2 flex items-center">
+                          <SparklesIcon className="h-4 w-4 mr-2 text-stone-600" />
+                          Improvement {index + 1}
                         </h3>
-                        <p className="text-sm text-[#6b6967] mb-4">
-                          {response.originalText}
-                        </p>
-                        <h3 className="text-sm font-medium text-[#484642] mb-2">
-                          Improved Text:
-                        </h3>
-                        <p className="text-sm text-[#6b6967]">
+                        <p className="text-sm text-stone-700">
                           {response.improvedText}
                         </p>
                       </div>
@@ -256,14 +278,17 @@ export default function PDFViewer() {
                 )}
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
       {selectedText && (
-        <div
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
           ref={tooltipRef}
-          className="fixed bg-white shadow-lg rounded-lg p-2 z-10"
+          className="fixed bg-white shadow-xl rounded-lg p-3 z-10"
           style={{
             left: `${tooltipPosition.x}px`,
             top: `${tooltipPosition.y}px`,
@@ -271,12 +296,12 @@ export default function PDFViewer() {
         >
           <button
             onClick={handleImproveWithAI}
-            className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#282624] hover:bg-[#3f3e3a] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#282624]"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full shadow-sm text-white bg-gradient-to-r from-stone-700 to-stone-600 hover:from-stone-800 hover:to-stone-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-stone-500 transition-all duration-300"
           >
-            <SparklesIcon className="h-4 w-4 mr-2" />
+            <SparklesIcon className="h-5 w-5 mr-2" />
             Improve with AI
           </button>
-        </div>
+        </motion.div>
       )}
     </div>
   );

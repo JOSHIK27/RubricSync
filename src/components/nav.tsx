@@ -2,9 +2,16 @@ import { Button } from "./ui/button";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
+import { supabase } from "@/lib";
+import { Badge } from "./ui/badge";
 
-export default function Nav() {
+export default async function Nav({ userid }: { userid: string | null }) {
   const { userId } = auth();
+
+  const { data, error } = await supabase
+    .from("subscriptions")
+    .select("*")
+    .eq("user_id", userId);
 
   return (
     <nav className="bg-gradient-to-r from-stone-200 to-stone-300 shadow-md">
@@ -27,6 +34,7 @@ export default function Nav() {
               <span className="ml-2 text-2xl font-bold text-stone-900">RS</span>
             </div>
           </Link>
+
           <div className="flex items-center">
             {!userId ? (
               <Link href="/sign-in">
@@ -35,7 +43,18 @@ export default function Nav() {
                 </Button>
               </Link>
             ) : (
-              <UserButton />
+              <>
+                <Badge
+                  className={`mr-4 ${
+                    data && data[0].type === "pro"
+                      ? "bg-amber-500 hover:bg-amber-600 text-stone-900"
+                      : "bg-stone-400 hover:bg-stone-500 text-stone-900"
+                  }`}
+                >
+                  {data && data[0].type === "pro" ? "PRO" : "FREE"}
+                </Badge>
+                <UserButton />
+              </>
             )}
           </div>
         </div>

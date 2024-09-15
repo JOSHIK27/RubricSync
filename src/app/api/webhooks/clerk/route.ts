@@ -49,31 +49,31 @@ export async function POST(req: Request) {
     });
   }
 
-  // Do something with the payload
-  // For this guide, you simply log the payload to the console
   const { id } = evt.data;
   const eventType = evt.type;
-  console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
-  console.log("Webhook body:", body);
+  console.log(id);
 
   if (eventType === "user.created") {
     const { email_addresses, first_name, last_name } = evt.data;
     try {
-      const { data, error } = await supabase.from("profiles").insert([
-        {
-          email: email_addresses[0].email_address,
-          name: `${first_name} ${last_name}`,
-        },
-      ]);
-      console.log("Profile created:", data);
-      if (error) {
-        throw error;
-      }
-    } catch (error) {
-      console.error("Error creating profile:", error);
-      return new Response("Error creating profile", {
-        status: 500,
+      const { error: userError } = await supabase.from("users").insert({
+        email: email_addresses[0].email_address,
+        name: `${first_name} ${last_name}`,
+        record_id: id,
       });
+
+      if (userError) throw userError;
+
+      const { error: subscriptionError } = await supabase
+        .from("subscriptions")
+        .insert({
+          type: "free",
+          user_id: id,
+        });
+
+      if (subscriptionError) throw subscriptionError;
+    } catch (error: any) {
+      return new Response(error.message, { status: 500 });
     }
   }
 

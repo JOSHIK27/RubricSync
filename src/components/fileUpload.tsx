@@ -100,12 +100,18 @@ export default function FileUpload() {
       <Input id="rubric" type="file" />
 
       {loading ? (
-        <Button disabled className="mt-4 w-full">
+        <Button
+          disabled
+          className="mt-4 px-8 py-6 bg-blue-600 text-white text-xl font-semibold rounded-full transition-all duration-300 ease-in-out hover:bg-blue-700 hover:shadow-lg flex items-center w-full"
+        >
           <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
           Syncing
         </Button>
       ) : (
-        <Button type="submit" className="mt-4 w-full">
+        <Button
+          type="submit"
+          className="mt-4 px-8 py-6 bg-blue-600 text-white text-xl font-semibold rounded-full transition-all duration-300 ease-in-out hover:bg-blue-700 hover:shadow-lg flex items-center w-full"
+        >
           Generate Report
         </Button>
       )}

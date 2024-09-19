@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${inter.className} bg-stone-300`}>
+        <body className={`${inter.className}`}>
           <Nav />
           {children}
         </body>

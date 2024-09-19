@@ -25,7 +25,7 @@ const faqData = [
 export default function Faqs() {
   return (
     <section className="max-w-3xl mx-auto mb-20 px-4">
-      <h2 className="text-center text-4xl text-gray-800 font-bold mb-8">
+      <h2 className="text-center text-4xl text-blue-600 font-bold mb-8">
         Frequently Asked Questions
       </h2>
       <Accordion type="single" collapsible className="space-y-4">

@@ -1,5 +1,5 @@
 import thesis from "../../public/Thesis-bro.svg";
-import report from "../../public/Browser stats-rafiki.svg";
+import report from "../../public/Thinking-face-bro.svg";
 import Image from "next/image";
 import { Card } from "./ui/card";
 import { motion } from "framer-motion";
@@ -18,19 +18,16 @@ export const FadeIn = ({ children }: { children: React.ReactNode }) => (
 
 export default function Features() {
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-gray-100">
+    <section className="py-24">
       <div className="container mx-auto px-4 md:px-8 lg:px-16">
         <FadeIn>
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-zinc-800 leading-tight">
+          <h2 className="text-4xl sm:text-5xl font-bold text-center mb-16 text-zinc-800 leading-tight">
             Revolutionizing{" "}
-            <span className="bg-gradient-to-r from-zinc-600 to-zinc-800 bg-clip-text text-transparent">
-              Thesis Review
-            </span>
+            <span className="text-blue-600 relative">Thesis Review</span>
           </h2>
         </FadeIn>
 
         <div className="space-y-24">
-          {/* Feature 1 */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -43,11 +40,11 @@ export default function Features() {
                 width={500}
                 height={500}
                 alt="Thesis illustration"
-                className="rounded-2xl shadow-xl"
+                className="rounded-md shadow-lg"
               />
             </div>
             <div className="md:w-1/2 space-y-4">
-              <h3 className="text-3xl font-bold text-zinc-800">
+              <h3 className="text-2xl sm:text-3xl font-bold text-blue-600">
                 Why Use Our Solution?
               </h3>
               <p className="text-zinc-600 text-lg leading-relaxed">
@@ -60,7 +57,8 @@ export default function Features() {
               </p>
               <Button
                 size="lg"
-                className="mt-4 bg-zinc-800 text-white hover:bg-zinc-700"
+                variant="outline"
+                className="mt-4 text-blue-600 border-blue-600 bg-white"
               >
                 Learn More
               </Button>
@@ -75,7 +73,9 @@ export default function Features() {
             className="flex flex-col-reverse md:flex-row justify-between items-center gap-12"
           >
             <div className="md:w-1/2 space-y-4">
-              <h3 className="text-3xl font-bold text-zinc-800">How It Works</h3>
+              <h3 className="text-2xl sm:text-3xl font-bold text-blue-600">
+                How It Works
+              </h3>
               <p className="text-zinc-600 text-lg leading-relaxed">
                 Our innovative AI technology analyzes your thesis or report
                 against the provided rubric, offering detailed insights and
@@ -87,18 +87,18 @@ export default function Features() {
               <Button
                 size="lg"
                 variant="outline"
-                className="mt-4 text-zinc-800 border-zinc-800 hover:bg-zinc-100"
+                className="mt-4 text-blue-600 border-blue-600 hover:bg-blue-100"
               >
                 See Demo
               </Button>
             </div>
-            <div className="md:w-1/2">
+            <div className="md:w-1/2 sm:pl-20">
               <Image
                 src={report}
-                width={500}
-                height={500}
+                width={400}
+                height={300}
                 alt="Report analysis illustration"
-                className="rounded-2xl shadow-xl"
+                className="rounded-xl shadow-lg"
               />
             </div>
           </motion.div>
@@ -112,7 +112,7 @@ export default function Features() {
           className="mt-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {/* Card 1 */}
-          <Card className="p-6 bg-white shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl">
+          <Card className="p-6 border-[0.75px] border-blue-600  bg-white shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl">
             <div className="flex flex-col items-center text-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +136,7 @@ export default function Features() {
           </Card>
 
           {/* Card 2 */}
-          <Card className="p-6 bg-white shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl">
+          <Card className="p-6 border-[0.75px] border-blue-600  bg-white shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl">
             <div className="flex flex-col items-center text-center">
               <Link href="/chat-with-pdf">
                 <svg
@@ -162,7 +162,7 @@ export default function Features() {
           </Card>
 
           {/* Card 3 */}
-          <Card className="p-6 bg-white shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl">
+          <Card className="p-6 border-[0.75px] border-blue-600  bg-white shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl">
             <div className="flex flex-col items-center text-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -186,7 +186,7 @@ export default function Features() {
           </Card>
 
           {/* Card 4 */}
-          <Card className="p-6 bg-white shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl">
+          <Card className="p-6 border-[0.75px] border-blue-600  bg-white shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl">
             <div className="flex flex-col items-center text-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

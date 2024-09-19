@@ -31,7 +31,7 @@ export default function Pricing() {
     },
     {
       name: "Premium",
-      price: "$XX",
+      price: "$5",
       period: "/month",
       description: "Advanced features for serious academic writers",
       features: [
@@ -42,18 +42,18 @@ export default function Pricing() {
         "Plagiarism checker",
       ],
       buttonText: "Join Waitlist",
-      buttonClass: "bg-[#ffd700] text-[#484642] hover:bg-[#ffed4a]",
+      buttonClass: "bg-blue-500 text-white hover:bg-blue-500",
       highlight: "SOON",
     },
   ];
 
   return (
-    <section className="mb-20 py-24 bg-gradient-to-b from-[#f5f3f2] to-white">
+    <section className="mb-20 py-24 bg-gradient-to-b from-sky-100 to-white">
       <div className="my-16 text-center">
-        <h1 className="text-5xl text-[#484642] font-bold mb-6">
+        <h1 className="text-5xl text-blue-600 font-bold mb-6">
           Simple, Transparent Pricing
         </h1>
-        <h2 className="text-2xl text-[#6b6967] font-medium max-w-3xl mx-auto">
+        <h2 className="text-2xl text-gray-600 font-medium max-w-3xl mx-auto">
           Choose the perfect plan to elevate your academic writing experience
         </h2>
       </div>
@@ -72,31 +72,29 @@ function PricingCard({ plan, delay }: { plan: Plan; delay: number }) {
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut", delay }}
-      className="flex max-w-xl"
+      className="flex max-w-xl w-full"
     >
       <Card
-        className={`p-8 m-2 h-full border-3 transition-all duration-300 ease-in-out hover:shadow-2xl ${
-          plan.highlight ? "border-[#ffd700]" : "border-[#d3d1ce]"
+        className={`p-8 m-2 h-full w-full border-2 transition-all duration-300 ease-in-out hover:shadow-2xl ${
+          plan.highlight ? "border-blue-400" : "border-gray-200"
         } bg-white relative overflow-hidden`}
       >
         {plan.highlight && (
-          <div className="absolute -top-1 -right-8 w-40 text-center bg-[#ffd700] text-[#484642] pl-10 py-1 transform rotate-45 text-sm font-bold shadow-md">
+          <div className="absolute -top-1 -right-8 w-40 text-center bg-blue-500 text-white pl-10 py-1 transform rotate-45 text-sm font-bold shadow-md">
             <span className="block w-full px-4">{plan.highlight}</span>
           </div>
         )}
         <div className="flex flex-col h-full">
-          <h3 className="text-3xl font-bold text-[#484642] mb-4">
-            {plan.name}
-          </h3>
+          <h3 className="text-3xl font-bold text-gray-800 mb-4">{plan.name}</h3>
           <div className="mb-6">
-            <span className="text-5xl font-extrabold text-[#484642]">
+            <span className="text-5xl font-extrabold text-blue-600">
               {plan.price}
             </span>
             {plan.period && (
-              <span className="text-xl text-[#6b6967]">{plan.period}</span>
+              <span className="text-xl text-gray-600">{plan.period}</span>
             )}
           </div>
-          <p className="text-lg text-[#6b6967] font-medium mb-8">
+          <p className="text-lg text-gray-600 font-medium mb-8">
             {plan.description}
           </p>
           <ul className="space-y-2 mb-6 flex-grow">
@@ -104,7 +102,7 @@ function PricingCard({ plan, delay }: { plan: Plan; delay: number }) {
               <li key={index} className="flex items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 mr-3 text-green-500"
+                  className="h-6 w-6 mr-3 text-blue-500"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -116,7 +114,7 @@ function PricingCard({ plan, delay }: { plan: Plan; delay: number }) {
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                <span className="text-base text-[#484642]">{feature}</span>
+                <span className="text-base text-gray-700">{feature}</span>
               </li>
             ))}
           </ul>

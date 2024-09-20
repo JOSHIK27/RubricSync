@@ -40,7 +40,6 @@ export default function Features() {
                 width={500}
                 height={500}
                 alt="Thesis illustration"
-                className="rounded-md shadow-lg"
               />
             </div>
             <div className="md:w-1/2 space-y-4">
@@ -98,7 +97,6 @@ export default function Features() {
                 width={400}
                 height={300}
                 alt="Report analysis illustration"
-                className="rounded-xl shadow-lg"
               />
             </div>
           </motion.div>

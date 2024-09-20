@@ -46,7 +46,7 @@ export async function POST(req: Request) {
 
     const feedback: { [key: string]: number } = {};
 
-    for (const rubric of rubricArray.choices[0].message.content) {
+    for (const rubric of JSON.parse(rubricArray.choices[0].message.content)) {
       const rubricEmbedding = await openai.embeddings.create({
         input: rubric,
         model: "text-embedding-ada-002",

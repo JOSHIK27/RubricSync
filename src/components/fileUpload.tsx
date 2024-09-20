@@ -12,16 +12,18 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import { feedbackContext } from "@/app/context/AppContext";
 
 export default function FileUpload() {
-  const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
   const { isLoaded, userId } = useAuth();
   const router = useRouter();
+  const { feedback, setFeedback } = useContext(feedbackContext);
+  const [feedbackData, setFeedbackData] = useState<any>(null);
 
   if (!isLoaded) {
     return <></>;
@@ -58,8 +60,10 @@ export default function FileUpload() {
           return response.json();
         })
         .then((message) => {
+          console.log(message);
           setLoading(false);
           setFeedback(message.feedback);
+          router.push("/dashboard");
         });
     } catch (error) {
       setLoading(false);
@@ -68,7 +72,7 @@ export default function FileUpload() {
 
   return (
     <form onSubmit={handleSubmit}>
-      {feedback && (
+      {feedbackData && (
         <Dialog defaultOpen={true}>
           <DialogContent className="sm:max-w-lg max-h-80 overflow-scroll">
             <DialogHeader>
@@ -77,11 +81,11 @@ export default function FileUpload() {
                 Anyone who has this link will be able to view this.
               </DialogDescription>
             </DialogHeader>
-            <div>{feedback}</div>
+            <div>{feedbackData}</div>
             <DialogFooter className="sm:justify-start">
               <DialogClose asChild>
                 <Button
-                  onClick={() => setFeedback("")}
+                  onClick={() => setFeedbackData("")}
                   type="button"
                   variant="secondary"
                 >

@@ -2,14 +2,14 @@ export default function Footer() {
   return (
     <section className="h-60 mt-20 w-full bg-blue-200">
       <div className="pl-40 pt-20">
-        <h1 className="text-black font-[400]">Contact</h1>
+        <h1 className="text-blue-900 font-[400]">Contact</h1>
         <div className="flex mt-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="1.5em"
             height="1.5em"
             viewBox="0 0 1000 1000"
-            className="mr-4"
+            className="mr-4 text-blue-900"
           >
             <path
               fill="currentColor"
@@ -22,7 +22,7 @@ export default function Footer() {
             width="1.5em"
             height="1.5em"
             viewBox="0 0 24 24"
-            className="mr-4"
+            className="mr-4 text-blue-900"
           >
             <path
               fill="currentColor"
@@ -34,6 +34,7 @@ export default function Footer() {
             width="1.5em"
             height="1.5em"
             viewBox="0 0 24 24"
+            className="mr-4 text-blue-900"
           >
             <g fill="none">
               <g clip-path="url(#akarIconsGithubFill0)">

@@ -22,7 +22,7 @@ export default async function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${inter.className}`}>
-          <Nav />
+          <Nav userid={userId} />
           {children}
         </body>
       </html>

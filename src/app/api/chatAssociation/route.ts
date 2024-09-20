@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     if (error) throw error;
 
     return NextResponse.json(
-      { chatAssociationId: data ? data[0].id : null },
+      { chatAssociationId: data ? data[0]["id"] : null },
       { status: 200 }
     );
   } catch (error) {

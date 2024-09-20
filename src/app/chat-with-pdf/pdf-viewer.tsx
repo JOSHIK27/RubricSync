@@ -14,7 +14,7 @@ import {
 } from "@heroicons/react/24/solid";
 import ReactLoading from "react-loading";
 import { motion } from "framer-motion";
-
+import { useAuth } from "@clerk/nextjs";
 interface AIResponse {
   id: number;
   improvedText: string;
@@ -34,6 +34,10 @@ export default function PDFViewer() {
   const [reportBuffer, setReportBuffer] = useState<Buffer | null>(null);
   const [rubricBuffer, setRubricBuffer] = useState<Buffer | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [chatId, setChatId] = useState<number>(0);
+  const [pdfRendered, setPdfRendered] = useState(false);
+
+  const { userId } = useAuth();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -51,6 +55,20 @@ export default function PDFViewer() {
     };
   }, []);
 
+  useEffect(() => {
+    const fetchChatAssociation = async () => {
+      const response = await fetch("api/chatAssociation", {
+        method: "POST",
+        body: JSON.stringify({ userId: userId }),
+      });
+      const { chatAssociationId } = await response.json();
+      setChatId(chatAssociationId);
+    };
+    if (pdfRendered) {
+      fetchChatAssociation();
+    }
+  }, [pdfRendered]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const reportInput = document.getElementById("report") as HTMLInputElement;
@@ -66,6 +84,7 @@ export default function PDFViewer() {
       const rubricBytes = await rubricInput.files[0].arrayBuffer();
       const rubricBuffer = Buffer.from(rubricBytes);
       setRubricBuffer(rubricBuffer);
+      setPdfRendered(true);
     }
   };
 

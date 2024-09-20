@@ -53,10 +53,6 @@ export async function POST(req: Request) {
       });
       let score = 0;
       for (const reportEmbeddingItem of reportEmbeddingVectorList) {
-        console.log(
-          reportEmbeddingItem.values,
-          rubricEmbedding.data[0].embedding
-        );
         score =
           score +
           CalculateSimilarityScore(
@@ -70,7 +66,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ feedback });
   } catch (error) {
-    console.log(error);
     return NextResponse.json({ message: error }, { status: 500 });
   }
 }

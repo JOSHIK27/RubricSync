@@ -20,7 +20,6 @@ export async function POST(req: Request) {
     if (event.type === "payment_intent.succeeded") {
     }
   } catch (err) {
-    console.log(err);
     return NextResponse.json(
       { message: "Webhook signature verification failed" },
       { status: 400 }

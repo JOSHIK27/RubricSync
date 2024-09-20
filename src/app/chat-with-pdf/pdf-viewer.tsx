@@ -130,6 +130,7 @@ export default function PDFViewer() {
       body: JSON.stringify({
         originalText: selectedText,
         criterion: rubricBuffer,
+        chatId,
       }),
     });
 

@@ -43,7 +43,6 @@ export async function POST(req: Request) {
       "svix-signature": svix_signature,
     }) as WebhookEvent;
   } catch (err) {
-    console.error("Error verifying webhook:", err);
     return new Response("Error occured", {
       status: 400,
     });
@@ -51,7 +50,6 @@ export async function POST(req: Request) {
 
   const { id } = evt.data;
   const eventType = evt.type;
-  console.log(id);
 
   if (eventType === "user.created") {
     const { email_addresses, first_name, last_name } = evt.data;

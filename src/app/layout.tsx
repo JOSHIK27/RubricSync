@@ -21,8 +21,8 @@ export default async function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${inter.className} bg-stone-300`}>
-          <Nav userid={userId} />
+        <body className={`${inter.className}`}>
+          <Nav />
           {children}
         </body>
       </html>

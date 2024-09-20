@@ -14,7 +14,7 @@ import {
 } from "@heroicons/react/24/solid";
 import ReactLoading from "react-loading";
 import { motion } from "framer-motion";
-
+import { useAuth } from "@clerk/nextjs";
 interface AIResponse {
   id: number;
   improvedText: string;
@@ -34,6 +34,10 @@ export default function PDFViewer() {
   const [reportBuffer, setReportBuffer] = useState<Buffer | null>(null);
   const [rubricBuffer, setRubricBuffer] = useState<Buffer | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [chatId, setChatId] = useState<number>(0);
+  const [pdfRendered, setPdfRendered] = useState(false);
+
+  const { userId } = useAuth();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -51,6 +55,20 @@ export default function PDFViewer() {
     };
   }, []);
 
+  useEffect(() => {
+    const fetchChatAssociation = async () => {
+      const response = await fetch("api/chatAssociation", {
+        method: "POST",
+        body: JSON.stringify({ userId: userId }),
+      });
+      const { chatAssociationId } = await response.json();
+      setChatId(chatAssociationId);
+    };
+    if (pdfRendered) {
+      fetchChatAssociation();
+    }
+  }, [pdfRendered]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const reportInput = document.getElementById("report") as HTMLInputElement;
@@ -66,6 +84,7 @@ export default function PDFViewer() {
       const rubricBytes = await rubricInput.files[0].arrayBuffer();
       const rubricBuffer = Buffer.from(rubricBytes);
       setRubricBuffer(rubricBuffer);
+      setPdfRendered(true);
     }
   };
 
@@ -132,12 +151,10 @@ export default function PDFViewer() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-6xl font-extrabold text-stone-800 mb-10 flex items-center"
+          className="text-6xl font-extrabold text-blue-800 mb-10 flex items-center"
         >
-          <DocumentIcon className="h-14 w-14 mr-5 text-stone-700" />
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-stone-700 to-stone-500">
-            Chat with PDF
-          </span>
+          <DocumentIcon className="h-14 w-14 mr-5 text-blue-700" />
+          <span className="text-blue-700">Chat with PDF</span>
         </motion.h1>
 
         <div className="flex flex-col lg:flex-row gap-10">
@@ -223,7 +240,7 @@ export default function PDFViewer() {
                     </div>
                     <button
                       type="submit"
-                      className="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-stone-700 hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-stone-500"
+                      className="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
                       <ArrowUpTrayIcon className="h-5 w-5 mr-2" />
                       Upload Files
@@ -241,9 +258,9 @@ export default function PDFViewer() {
             className="w-full lg:w-[40%] flex flex-col h-[calc(100vh-2rem)]"
           >
             <div className="bg-white shadow-xl rounded-xl overflow-hidden border border-stone-300 hover:shadow-2xl transition-all duration-300 flex-grow flex flex-col">
-              <div className="p-8 flex-shrink-0 bg-gradient-to-r from-stone-200 to-stone-300">
-                <h2 className="text-3xl font-bold text-stone-800 mb-4 flex items-center">
-                  <SparklesIcon className="h-8 w-8 mr-4 text-stone-700" />
+              <div className="p-8 flex-shrink-0 bg-blue-200 border-b border-blue-300">
+                <h2 className="text-3xl font-bold text-blue-800 mb-4 flex items-center">
+                  <SparklesIcon className="h-8 w-8 mr-4 text-blue-700" />
                   AI Improvements
                 </h2>
               </div>

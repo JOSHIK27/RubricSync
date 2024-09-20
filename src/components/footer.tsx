@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <section className="h-60 mt-20 w-full bg-[#96918c]">
+    <section className="h-60 mt-20 w-full bg-blue-200">
       <div className="pl-40 pt-20">
         <h1 className="text-black font-[400]">Contact</h1>
         <div className="flex mt-2">

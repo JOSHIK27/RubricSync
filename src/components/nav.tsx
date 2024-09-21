@@ -47,7 +47,7 @@ export default async function Nav({ userid }: { userid: string | null }) {
                   className={`mr-4 ${
                     data && data[0].type === "pro"
                       ? "bg-amber-500 hover:bg-amber-600 text-stone-900"
-                      : "bg-stone-400 hover:bg-stone-500 text-stone-900"
+                      : "bg-blue-200 hover:bg-blue-300 text-stone-900"
                   }`}
                 >
                   {data && data[0].type === "pro" ? "PRO" : "FREE"}

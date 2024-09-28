@@ -43,6 +43,11 @@ export default async function Nav({ userid }: { userid: string | null }) {
               </Link>
             ) : (
               <>
+                <Link href="/dashboard">
+                  <Button className="mr-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-150 ease-in-out">
+                    Dashboard
+                  </Button>
+                </Link>
                 <Badge
                   className={`mr-4 ${
                     data && data[0].type === "pro"

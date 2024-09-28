@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { useContext, useEffect, useState } from "react";
 import { workspaceContext } from "@/app/context/AppContext";
 import { useQuery } from "@/hooks/useQuery";
-
+import ReactLoading from "react-loading";
 export default function Page() {
   const { workspaceCount } = useContext(workspaceContext);
   const [feedbacksList, setFeedbacksList] = useState<any[]>([]);
@@ -23,7 +23,12 @@ export default function Page() {
   }, [data]);
   console.log(feedbacksList);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <ReactLoading type={"bars"} color="#4299e1" />
+      </div>
+    );
   return (
     <section>
       <div className="flex px-4 justify-between items-center">

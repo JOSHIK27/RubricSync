@@ -34,7 +34,7 @@ export default async function Nav({ userid }: { userid: string | null }) {
             </div>
           </Link>
 
-          <div className="flex items-center">
+          <div className="flex items-center space-x-4">
             {!userId ? (
               <Link href="/sign-in">
                 <Button className="sign-in-btn bg-blue-700 hover:bg-blue-800 text-white font-medium py-2 px-4 rounded-md transition duration-150 ease-in-out">
@@ -43,13 +43,16 @@ export default async function Nav({ userid }: { userid: string | null }) {
               </Link>
             ) : (
               <>
-                <Link href="/dashboard">
-                  <Button className="mr-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-150 ease-in-out">
-                    Dashboard
+                <Link href="/workspaces">
+                  <Button
+                    value="outline"
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium"
+                  >
+                    Workspaces
                   </Button>
                 </Link>
                 <Badge
-                  className={`mr-4 ${
+                  className={`${
                     data && data[0].type === "pro"
                       ? "bg-amber-500 hover:bg-amber-600 text-stone-900"
                       : "bg-blue-200 hover:bg-blue-300 text-stone-900"

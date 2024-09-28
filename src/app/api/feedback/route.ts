@@ -9,7 +9,9 @@ import {
 import pdf from "pdf-parse";
 import { render_page } from "@/lib/utils";
 import { supabase } from "@/lib/supabase";
+import { auth } from "@clerk/nextjs/server";
 export async function POST(req: Request) {
+  const { userId } = auth();
   try {
     const { reportDataBuffer, rubricDataBuffer } = await req.json();
 
@@ -66,6 +68,7 @@ export async function POST(req: Request) {
 
     const { error } = await supabase.from("feedbacks").insert({
       feedback: JSON.stringify(feedback),
+      user_id: userId,
     });
 
     if (error) {
@@ -77,6 +80,31 @@ export async function POST(req: Request) {
     console.log(error);
     return NextResponse.json({ message: error }, { status: 500 });
   }
+}
+
+export async function GET(req: Request) {
+  const { userId } = auth();
+  const { data, error } = await supabase
+    .from("feedbacks")
+    .select("*")
+    .eq("user_id", userId);
+  const response = data?.map((item) => {
+    const feedbackObj = JSON.parse(item.feedback);
+    let avg = 0;
+    for (const criteria in feedbackObj) {
+      avg += feedbackObj[criteria];
+    }
+    avg /= Object.keys(feedbackObj).length;
+    return {
+      ...item,
+      avgScore: avg,
+      feedback: feedbackObj.feedback,
+    };
+  });
+  if (error) {
+    return NextResponse.json({ message: error }, { status: 500 });
+  }
+  return NextResponse.json({ data: response });
 }
 
 async function textExtractor(pdfBuffer: Buffer) {

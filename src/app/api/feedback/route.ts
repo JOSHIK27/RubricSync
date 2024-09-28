@@ -8,7 +8,7 @@ import {
 } from "../../../utils/index";
 import pdf from "pdf-parse";
 import { render_page } from "@/lib/utils";
-
+import { supabase } from "@/lib/supabase";
 export async function POST(req: Request) {
   try {
     const { reportDataBuffer, rubricDataBuffer } = await req.json();
@@ -64,8 +64,17 @@ export async function POST(req: Request) {
       feedback[rubric] = score;
     }
 
+    const { error } = await supabase.from("feedbacks").insert({
+      feedback: JSON.stringify(feedback),
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
     return NextResponse.json({ feedback });
   } catch (error) {
+    console.log(error);
     return NextResponse.json({ message: error }, { status: 500 });
   }
 }

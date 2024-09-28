@@ -1,7 +1,6 @@
 "use client";
 import BlurIn from "@/components/magicui/blur-in";
 import HistoryCard from "@/components/historyCard";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "@radix-ui/react-icons";
 import { Separator } from "@/components/ui/separator";
@@ -18,10 +17,7 @@ export default function Page() {
           word="Sync History"
           className="!text-[40px] font-bold text-blue-600"
         />
-        <Button
-          variant={`${workspaceCount > 0 ? "default" : "outline"}`}
-          className="text-blue-600 border-blue-300"
-        >
+        <Button variant="outline" className="text-blue-600 border-blue-300">
           <PlusIcon className="mr-2 h-4 w-4" /> Create Dashboard
         </Button>
       </div>

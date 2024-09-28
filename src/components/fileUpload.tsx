@@ -60,7 +60,6 @@ export default function FileUpload() {
           return response.json();
         })
         .then((message) => {
-          console.log(message);
           setLoading(false);
           setFeedback(message.feedback);
           router.push("/dashboard");

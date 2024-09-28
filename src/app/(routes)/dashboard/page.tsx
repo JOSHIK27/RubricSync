@@ -1,6 +1,7 @@
 import { RadarChartComponent } from "@/components/charts/radarChart";
 import BarChartComponent from "@/components/charts/barChart";
 import AreaChartComponent from "@/components/charts/areaChart";
+
 export default function Page() {
   const data = [
     { month: "1", score: 10 },

@@ -3,13 +3,11 @@
 import FileUpload from "@/components/fileUpload";
 import Context from "@/components/ui/context";
 import { Card } from "@/components/ui/card";
-import { motion } from "framer-motion";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import Pricing from "./pricing";
 import Footer from "./footer";
 import Features from "./features";
 import Faqs from "./faqs";
-import GradualSpacing from "@/components/magicui/gradual-spacing";
 import ShimmerButton from "@/components/magicui/shimmer-button";
 import BlurIn from "@/components/magicui/blur-in";
 

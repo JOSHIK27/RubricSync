@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { workspaceContext } from "@/app/context/AppContext";
+import { useContext } from "react";
 
 interface AnimatedSubscribeButtonProps {
   buttonColor: string;
@@ -21,13 +23,17 @@ export const AnimatedSubscribeButton: React.FC<
   initialText,
 }) => {
   const [isSubscribed, setIsSubscribed] = useState<boolean>(subscribeStatus);
+  const { setWorkspaceCount } = useContext(workspaceContext);
 
   return (
     <AnimatePresence mode="wait">
       {isSubscribed ? (
         <motion.button
-          className="relative flex w-[200px] items-center justify-center overflow-hidden rounded-md bg-white p-[10px] outline outline-1 outline-black"
-          onClick={() => setIsSubscribed(false)}
+          className="relative flex w-full items-center justify-center overflow-hidden rounded-md bg-white p-[10px] outline outline-1 outline-black"
+          onClick={() => {
+            setIsSubscribed(false);
+            setWorkspaceCount((prevCount: number) => prevCount - 1);
+          }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -44,9 +50,12 @@ export const AnimatedSubscribeButton: React.FC<
         </motion.button>
       ) : (
         <motion.button
-          className="relative flex w-[200px] cursor-pointer items-center justify-center rounded-md border-none p-[10px]"
+          className="relative flex w-full cursor-pointer items-center justify-center rounded-md border-none p-[10px]"
           style={{ backgroundColor: buttonColor, color: buttonTextColor }}
-          onClick={() => setIsSubscribed(true)}
+          onClick={() => {
+            setIsSubscribed(true);
+            setWorkspaceCount((prevCount: number) => prevCount + 1);
+          }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

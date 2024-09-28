@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Clock } from "lucide-react";
 import { motion } from "framer-motion";
+import { AnimatedSubscribeButton } from "@/components/magicui/animated-subscribe-button";
+import { ChevronRightIcon, CheckIcon } from "@radix-ui/react-icons";
+
 export default function HistoryCard({ time }: { time: number }) {
   return (
     <motion.div
@@ -25,9 +28,23 @@ export default function HistoryCard({ time }: { time: number }) {
           </div>
         </CardContent>
         <CardFooter className="bg-blue-100 p-4">
-          <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-            Add to Workspace
-          </Button>
+          <AnimatedSubscribeButton
+            buttonColor="#3182ce"
+            buttonTextColor="#ffffff"
+            subscribeStatus={false}
+            initialText={
+              <span className="group inline-flex items-center">
+                Add to Workspace{" "}
+                <ChevronRightIcon className="ml-1 size-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </span>
+            }
+            changeText={
+              <span className="group inline-flex items-center">
+                <CheckIcon className="mr-2 size-4" />
+                Added to Workspace{" "}
+              </span>
+            }
+          />
         </CardFooter>
       </Card>
     </motion.div>

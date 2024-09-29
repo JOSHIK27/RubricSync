@@ -1,28 +1,51 @@
 "use client";
+
+import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import Checkout from "@/components/checkout";
-import { convertToSubCurrency } from "@/utils/stripe";
-
-if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
-  throw new Error("NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not set");
-}
+import { useState, useEffect } from "react";
+import CheckoutForm from "@/components/checkout";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? ""
 );
 
 export default function Page() {
+  const [clientSecret, setClientSecret] = useState("");
+  const [confirmed, setConfirmed] = useState(false);
+
+  useEffect(() => {
+    const fetchClientSecret = async () => {
+      const response = await fetch("/api/create-payment-intent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ amount: 1000 }),
+      });
+
+      const data = await response.json();
+      setClientSecret(data.clientSecret);
+    };
+
+    fetchClientSecret();
+  }, []);
+
+  const appearance = {
+    theme: "stripe" as const,
+  };
+  const options = {
+    clientSecret,
+    appearance,
+  };
+
   return (
-    <Elements
-      stripe={stripePromise}
-      options={{
-        mode: "payment",
-        amount: convertToSubCurrency(2),
-        currency: "usd",
-      }}
-    >
-      <Checkout amount={convertToSubCurrency(2)} />
-    </Elements>
+    <div className="App">
+      {clientSecret && (
+        <Elements options={options} stripe={stripePromise}>
+          {confirmed ? <></> : <CheckoutForm />}
+        </Elements>
+      )}
+    </div>
   );
 }

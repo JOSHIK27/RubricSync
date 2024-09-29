@@ -21,7 +21,7 @@ export default function Page() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ amount: 1000 }),
+        body: JSON.stringify({ amount: 100 }),
       });
 
       const data = await response.json();

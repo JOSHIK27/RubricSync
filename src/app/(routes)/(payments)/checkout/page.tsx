@@ -18,11 +18,11 @@ export default function Page() {
       stripe={stripePromise}
       options={{
         mode: "payment",
-        amount: convertToSubCurrency(1),
+        amount: convertToSubCurrency(2),
         currency: "usd",
       }}
     >
-      <Checkout amount={convertToSubCurrency(5)} />
+      <Checkout amount={convertToSubCurrency(2)} />
     </Elements>
   );
 }

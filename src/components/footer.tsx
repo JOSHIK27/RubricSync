@@ -1,3 +1,5 @@
+import { Separator } from "@/components/ui/separator";
+
 export default function Footer() {
   return (
     <section className="h-60 mt-20 w-full bg-blue-200">
@@ -53,6 +55,11 @@ export default function Footer() {
             </g>
           </svg>
         </div>
+      </div>
+      <Separator className="bg-blue-900 my-6 w-4/5 mx-auto" />
+      <div className="text-center text-blue-900 text-sm mt-4">
+        &copy; {new Date().getFullYear()} RubricSync. All rights reserved.
+        reserved.
       </div>
     </section>
   );

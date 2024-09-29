@@ -10,14 +10,13 @@ export async function POST(req: NextRequest) {
       amount,
       currency: "usd",
     });
-    console.log("Hi");
+    console.log(paymentIntent.client_secret);
 
     return NextResponse.json(
       { clientSecret: paymentIntent.client_secret },
       { status: 200 }
     );
   } catch (error) {
-    console.log(error);
     return NextResponse.json({ error }, { status: 500 });
   }
 }

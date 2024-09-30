@@ -4,6 +4,7 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import { Separator } from "@/components/ui/separator";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -48,9 +49,10 @@ export default function CheckoutForm() {
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
       <form id="payment-form" onSubmit={handleSubmit} className="space-y-6">
-        <h2 className="text-2xl font-semibold text-center text-gray-800">
-          Complete Your Payment
+        <h2 className="text-3xl text-gray-900 font-bold text-center relative inline-block">
+          Pay $5
         </h2>
+        <Separator className="w-full" />
         <PaymentElement
           id="payment-element"
           options={{ layout: "tabs" }}

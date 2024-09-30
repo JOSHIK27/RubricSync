@@ -21,7 +21,7 @@ export default function Page() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ amount: 100 }),
+        body: JSON.stringify({ amount: 500 }),
       });
 
       const data = await response.json();
@@ -40,7 +40,7 @@ export default function Page() {
   };
 
   return (
-    <div className="App">
+    <div className="App mt-20">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           {confirmed ? <></> : <CheckoutForm />}

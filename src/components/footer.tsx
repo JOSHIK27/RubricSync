@@ -11,7 +11,8 @@ export default function Footer() {
             width="1.5em"
             height="1.5em"
             viewBox="0 0 1000 1000"
-            className="mr-4 text-blue-900"
+            className="mr-4 text-blue-900 cursor-pointer"
+            onClick={() => window.open("https://www.linkedin.com/in/joshik27/")}
           >
             <path
               fill="currentColor"
@@ -24,7 +25,8 @@ export default function Footer() {
             width="1.5em"
             height="1.5em"
             viewBox="0 0 24 24"
-            className="mr-4 text-blue-900"
+            className="mr-4 text-blue-900 cursor-pointer"
+            onClick={() => window.open("mailto:joshikroshan4021@gmail.com")}
           >
             <path
               fill="currentColor"
@@ -36,7 +38,10 @@ export default function Footer() {
             width="1.5em"
             height="1.5em"
             viewBox="0 0 24 24"
-            className="mr-4 text-blue-900"
+            className="mr-4 text-blue-900 cursor-pointer"
+            onClick={() =>
+              window.open("https://github.com/joshik27/rubricsync")
+            }
           >
             <g fill="none">
               <g clip-path="url(#akarIconsGithubFill0)">

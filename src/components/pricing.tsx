@@ -2,6 +2,7 @@
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 interface Plan {
   name: string;
@@ -15,6 +16,7 @@ interface Plan {
 }
 
 export default function Pricing() {
+  const router = useRouter();
   const plans = [
     {
       name: "Basic",
@@ -26,7 +28,7 @@ export default function Pricing() {
         "Standard report",
         "Email support",
       ],
-      buttonText: "Get Started",
+      buttonText: "Purchase",
       buttonClass: "bg-[#282624] hover:bg-[#3f3e3a]",
     },
     {
@@ -41,7 +43,7 @@ export default function Pricing() {
         "Priority support",
         "Plagiarism checker",
       ],
-      buttonText: "Join Waitlist",
+      buttonText: "Purchase",
       buttonClass: "bg-blue-500 text-white hover:bg-blue-500",
       highlight: "SOON",
     },
@@ -59,14 +61,27 @@ export default function Pricing() {
       </div>
       <div className="flex justify-center flex-wrap gap-6">
         {plans.map((plan, index) => (
-          <PricingCard key={index} plan={plan} delay={index * 0.2} />
+          <PricingCard
+            key={index}
+            plan={plan}
+            delay={index * 0.2}
+            router={() => router}
+          />
         ))}
       </div>
     </section>
   );
 }
 
-function PricingCard({ plan, delay }: { plan: Plan; delay: number }) {
+function PricingCard({
+  plan,
+  delay,
+  router,
+}: {
+  plan: Plan;
+  delay: number;
+  router: typeof useRouter;
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -121,8 +136,8 @@ function PricingCard({ plan, delay }: { plan: Plan; delay: number }) {
           <Button
             className={`w-full py-6 text-lg font-semibold ${plan.buttonClass} transition-colors duration-300`}
             onClick={() => {
-              if (plan.buttonText === "Join Waitlist") {
-                window.open("https://buy.stripe.com/test_eVa8xfa4Ug6bbL2fYY");
+              if (plan.buttonText === "Purchase") {
+                router().push("/checkout");
               }
             }}
           >

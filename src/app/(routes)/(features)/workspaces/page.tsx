@@ -8,6 +8,7 @@ import { useContext, useEffect, useState } from "react";
 import { workspaceContext } from "@/app/context/AppContext";
 import { useQuery } from "@/hooks/useQuery";
 import ReactLoading from "react-loading";
+
 export default function Page() {
   const { workspaceCount } = useContext(workspaceContext);
   const [feedbacksList, setFeedbacksList] = useState<any[]>([]);
@@ -21,7 +22,6 @@ export default function Page() {
       setFeedbacksList(data.data);
     }
   }, [data]);
-  console.log(feedbacksList);
 
   if (loading)
     return (

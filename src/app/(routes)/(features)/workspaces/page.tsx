@@ -7,13 +7,15 @@ import { Separator } from "@/components/ui/separator";
 import { useEffect, useState } from "react";
 import { useQuery } from "@/hooks/useQuery";
 import ReactLoading from "react-loading";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateFeedbackList } from "@/lib/features/dashboards/FeedbackSlice";
-import { RootState } from "@/lib/store";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [feedbacksList, setFeedbacksList] = useState<any[]>([]);
-  const feedback = useSelector((state: RootState) => state.counter.value);
+  const [navigateToDashboard, setNavigateToDashboard] =
+    useState<boolean>(false);
+  const router = useRouter();
   const dispatch = useDispatch();
   const { data, error, loading } = useQuery({
     url: "/api/feedback",
@@ -26,6 +28,15 @@ export default function Page() {
       dispatch(updateFeedbackList(data.data));
     }
   }, [data]);
+
+  if (error) {
+    alert(error);
+    return;
+  }
+
+  if (navigateToDashboard) {
+    router.push("/workspace-dashboard");
+  }
 
   if (loading)
     return (
@@ -40,7 +51,11 @@ export default function Page() {
           word="Sync History"
           className="!text-[40px] font-bold text-blue-600"
         />
-        <Button variant="outline" className="text-blue-600 border-blue-300">
+        <Button
+          onClick={() => setNavigateToDashboard(true)}
+          variant="outline"
+          className="text-blue-600 border-blue-300"
+        >
           <PlusIcon className="mr-2 h-4 w-4" /> Create Dashboard
         </Button>
       </div>
@@ -49,8 +64,8 @@ export default function Page() {
         {feedbacksList &&
           feedbacksList.map((feedback, index) => (
             <HistoryCard
-              key={feedback.id}
-              id={index + 1}
+              key={index}
+              id={index}
               time={100 * index}
               score={feedback.avgScore}
             />

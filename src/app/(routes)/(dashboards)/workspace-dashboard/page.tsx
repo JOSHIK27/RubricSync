@@ -4,9 +4,9 @@ import { RootState } from "@/lib/store";
 import LineChartComponent from "@/components/charts/lineChart";
 
 export default function Page() {
-  const feedbackList = useSelector(
-    (state: RootState) => state.feedback.feedbackArray
+  const filteredFeedbackList = useSelector(
+    (state: RootState) => state.filteredFeedback.filteredFeedbackArray
   );
-  console.log(feedbackList);
+  console.log(filteredFeedbackList);
   return <LineChartComponent />;
 }

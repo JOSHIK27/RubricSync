@@ -24,7 +24,9 @@ export default function HistoryCard({
       <Card className="bg-blue-50 border-blue-200">
         <CardContent className="p-4">
           <div className="flex justify-between items-center mb-2">
-            <h3 className="text-lg font-semibold text-blue-800">ID: {id}</h3>
+            <h3 className="text-lg font-semibold text-blue-800">
+              ID: {id + 1}
+            </h3>
             <Badge variant="secondary" className="bg-blue-100 text-blue-800">
               Score: {score}
             </Badge>

@@ -57,7 +57,7 @@ export default function PDFViewer() {
 
   useEffect(() => {
     const fetchChatAssociation = async () => {
-      const response = await fetch("api/chatAssociation", {
+      const response = await fetch("api/chat-association", {
         method: "POST",
         body: JSON.stringify({ userId: userId }),
       });
@@ -122,7 +122,7 @@ export default function PDFViewer() {
 
   const handleImproveWithAI = async () => {
     setIsLoading(true);
-    const response = await fetch("/api/improveText", {
+    const response = await fetch("/api/improve-text", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

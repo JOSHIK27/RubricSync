@@ -41,16 +41,17 @@ export default function HistoryCard({
             subscribeStatus={false}
             initialText={
               <span className="group inline-flex items-center">
-                Add to Workspace{" "}
+                Add to Workspace
                 <ChevronRightIcon className="ml-1 size-4 transition-transform duration-300 group-hover:translate-x-1" />
               </span>
             }
             changeText={
               <span className="group inline-flex items-center">
                 <CheckIcon className="mr-2 size-4" />
-                Added to Workspace{" "}
+                Added to Workspace
               </span>
             }
+            id={id}
           />
         </CardFooter>
       </Card>

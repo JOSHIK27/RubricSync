@@ -1,10 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { counterSlice } from "./features/counter/CounterSlice";
+import { FeedbackSlice } from "./features/dashboards/FeedbackSlice";
+import { FilteredFeedbackSlice } from "./features/dashboards/FilteredFeedbackSlice";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       counter: counterSlice.reducer,
+      feedback: FeedbackSlice.reducer,
+      filteredFeedback: FilteredFeedbackSlice.reducer,
     },
   });
 };

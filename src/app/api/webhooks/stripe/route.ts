@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     );
 
     if (event.type === "payment_intent.succeeded") {
-      console.log("Payment intent succeeded");
+      // console.log("Payment intent succeeded");
     }
   } catch (err) {
     return NextResponse.json(

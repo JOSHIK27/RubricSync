@@ -25,11 +25,11 @@ export default function FileUpload() {
   const { feedback, setFeedback } = useContext(feedbackContext);
   const [feedbackData, setFeedbackData] = useState<any>(null);
 
-  if (!isLoaded) {
-    return <></>;
-  } else if (!userId) {
-    router.push("/sign-in");
-  }
+  // if (!isLoaded) {
+  //   return <></>;
+  // } else if (!userId) {
+  //   router.push("/sign-in");
+  // }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -110,6 +110,7 @@ export default function FileUpload() {
         </Button>
       ) : (
         <Button
+          id="generate-btn"
           type="submit"
           className="mt-4 px-8 py-6 bg-blue-600 text-white text-xl font-semibold rounded-full transition-all duration-300 ease-in-out hover:bg-blue-700 hover:shadow-lg flex items-center w-full"
         >

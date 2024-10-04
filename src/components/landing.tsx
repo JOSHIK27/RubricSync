@@ -32,7 +32,11 @@ export default function Landing() {
           <div className="flex justify-center mt-12">
             <Drawer>
               <DrawerTrigger asChild>
-                <ShimmerButton background="#2463EB" className="shadow-2xl">
+                <ShimmerButton
+                  id="sync-btn"
+                  background="#2463EB"
+                  className="shadow-2xl"
+                >
                   <span className="text-xl font-semibold">Start Syncing</span>
                 </ShimmerButton>
               </DrawerTrigger>

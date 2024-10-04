@@ -34,9 +34,6 @@ export const AnimatedSubscribeButton: React.FC<
   const feedbackList = useSelector(
     (state: RootState) => state.feedback.feedbackArray
   );
-
-  console.log(filteredFeedbackList, feedbackList);
-
   const dispatch = useDispatch();
 
   return (
@@ -69,6 +66,7 @@ export const AnimatedSubscribeButton: React.FC<
           onClick={() => {
             setIsSubscribed(true);
             setWorkspaceCount((prevCount: number) => prevCount + 1);
+            let check = false;
             dispatch(
               updateFilteredFeedbackList([
                 ...filteredFeedbackList,

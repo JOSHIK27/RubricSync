@@ -3,7 +3,7 @@ import { openai } from "../lib/openai";
 export async function ExtractRubricCriteria(rubric: String) {
   const prompt = `Read the following Marking Rubric very carefully: ${rubric}. 
   Identify all the key evaluation metrics i.e critieria for marking carefully and return them as a javascript array of strings.
-  Make sure you do not miss any criteria and each criteria is as detailed as possible.
+  Make sure you do not miss any criteria and each criteria should be as detailed as possible.
 
   Caution!!!
   The returned array should not have any other text or comment. It should only have the array for example: ["a", "b", "c"].

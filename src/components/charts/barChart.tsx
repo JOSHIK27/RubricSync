@@ -39,7 +39,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function BarChartComponent() {
+export default function BarChartComponent({ data }: { data: any }) {
   return (
     <Card className="w-[400px] m-4">
       <CardHeader>
@@ -50,7 +50,7 @@ export default function BarChartComponent() {
         <ChartContainer config={chartConfig}>
           <BarChart
             accessibilityLayer
-            data={chartData}
+            data={data}
             layout="vertical"
             margin={{
               left: -20,

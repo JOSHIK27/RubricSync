@@ -25,11 +25,11 @@ export default function FileUpload() {
   const { feedback, setFeedback } = useContext(feedbackContext);
   const [feedbackData, setFeedbackData] = useState<any>(null);
 
-  // if (!isLoaded) {
-  //   return <></>;
-  // } else if (!userId) {
-  //   router.push("/sign-in");
-  // }
+  if (!isLoaded) {
+    return <></>;
+  } else if (!userId) {
+    router.push("/sign-in");
+  }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -62,7 +62,7 @@ export default function FileUpload() {
         .then((message) => {
           setLoading(false);
           setFeedback(message.feedback);
-          router.push("/dashboard");
+          router.push("/sync-dashboard");
         });
     } catch (error) {
       setLoading(false);

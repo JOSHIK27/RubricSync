@@ -1,6 +1,9 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-const isProtectedRoute = createRouteMatcher(["/chat-with-pdf(.*)"]);
+const isProtectedRoute = createRouteMatcher([
+  "/chat-with-pdf",
+  "/chat-with-pdf/:path*",
+]);
 
 export default clerkMiddleware((auth, req) => {
   if (isProtectedRoute(req)) auth().protect();

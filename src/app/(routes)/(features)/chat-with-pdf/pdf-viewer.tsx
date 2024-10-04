@@ -167,7 +167,7 @@ export default function PDFViewer() {
           >
             <div className="bg-white shadow-xl rounded-xl overflow-hidden border border-stone-300 hover:shadow-2xl transition-all duration-300">
               {reportFile ? (
-                <div className="p-6">
+                <div id="chat-container" className="p-6 ">
                   <Document
                     file={reportFile}
                     onLoadSuccess={onDocumentLoadSuccess}
@@ -241,6 +241,7 @@ export default function PDFViewer() {
                     </div>
                     <button
                       type="submit"
+                      id="upload-files"
                       className="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
                       <ArrowUpTrayIcon className="h-5 w-5 mr-2" />

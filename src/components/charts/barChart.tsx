@@ -50,7 +50,7 @@ export default function BarChartComponent({ data }: { data: any }) {
         <ChartContainer config={chartConfig}>
           <BarChart
             accessibilityLayer
-            data={chartData}
+            data={data}
             layout="vertical"
             margin={{
               left: -20,

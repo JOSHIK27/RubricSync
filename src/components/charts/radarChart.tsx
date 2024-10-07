@@ -34,7 +34,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function RadarChartComponent() {
+export function RadarChartComponent({ data }: { data: any }) {
   return (
     <Card>
       <CardHeader className="items-center pb-4">
@@ -48,11 +48,11 @@ export function RadarChartComponent() {
           config={chartConfig}
           className="mx-auto aspect-square max-h-[250px]"
         >
-          <RadarChart data={chartData}>
+          <RadarChart data={data}>
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <PolarAngleAxis dataKey="month" />
             <PolarGrid />
-            <Radar dataKey="desktop" fill="#2563eb" fillOpacity={0.6} />
+            <Radar dataKey="score" fill="#2563eb" fillOpacity={0.6} />
           </RadarChart>
         </ChartContainer>
       </CardContent>

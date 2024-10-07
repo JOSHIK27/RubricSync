@@ -22,7 +22,7 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json(improvedText.choices[0].message.content, {
-      status: 200,
+      status: 201,
     });
   } catch (error) {
     return NextResponse.json(

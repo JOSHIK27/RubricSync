@@ -17,14 +17,15 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { feedbackContext } from "@/app/context/AppContext";
+import { useToast } from "@/hooks/use-toast";
 
 export default function FileUpload() {
   const [loading, setLoading] = useState(false);
   const { isLoaded, userId } = useAuth();
   const router = useRouter();
-  const { feedback, setFeedback } = useContext(feedbackContext);
+  const { setFeedback } = useContext(feedbackContext);
   const [feedbackData, setFeedbackData] = useState<any>(null);
-
+  const { toast } = useToast();
   if (!isLoaded) {
     return <></>;
   } else if (!userId) {
@@ -48,23 +49,26 @@ export default function FileUpload() {
     const rubricDataBuffer = Buffer.from(rubricBytes);
 
     try {
-      fetch("api/feedback", {
+      const response = await fetch("api/feedback", {
         method: "POST",
         body: JSON.stringify({
           reportDataBuffer,
           rubricDataBuffer,
         }),
-      })
-        .then((response) => {
-          if (!response.ok) throw new Error("Some Error");
-          return response.json();
-        })
-        .then((message) => {
-          setLoading(false);
-          setFeedback(message.feedback);
-          router.push("/sync-dashboard");
-        });
+      });
+      if (!response.ok) {
+        const { message } = await response.json();
+        return new Error(message);
+      }
+      const { feedback } = await response.json();
+      setFeedback(feedback);
+      setLoading(false);
+      router.push("/sync-dashboard");
     } catch (error) {
+      toast({
+        title: "Server Error",
+        description: error as string,
+      });
       setLoading(false);
     }
   };

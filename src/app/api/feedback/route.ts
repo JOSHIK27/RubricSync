@@ -75,13 +75,13 @@ export async function POST(req: Request) {
       throw new Error(error.message);
     }
 
-    return NextResponse.json({ feedback });
+    return NextResponse.json({ feedback }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ message: error }, { status: 500 });
   }
 }
 
-export async function GET(req: Request) {
+export async function GET() {
   const { userId } = auth();
   const { data, error } = await supabase
     .from("feedbacks")
@@ -103,7 +103,7 @@ export async function GET(req: Request) {
   if (error) {
     return NextResponse.json({ message: error }, { status: 500 });
   }
-  return NextResponse.json({ data: response });
+  return NextResponse.json({ data: response }, { status: 200 });
 }
 
 async function textExtractor(pdfBuffer: Buffer) {

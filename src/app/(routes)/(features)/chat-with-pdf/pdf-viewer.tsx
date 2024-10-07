@@ -15,6 +15,7 @@ import {
 import ReactLoading from "react-loading";
 import { motion } from "framer-motion";
 import { useAuth } from "@clerk/nextjs";
+import { useToast } from "@/hooks/use-toast";
 interface AIResponse {
   id: number;
   improvedText: string;
@@ -36,6 +37,7 @@ export default function PDFViewer() {
   const [isLoading, setIsLoading] = useState(false);
   const [chatId, setChatId] = useState<number>(0);
   const [pdfRendered, setPdfRendered] = useState(false);
+  const { toast } = useToast();
 
   const { userId } = useAuth();
 
@@ -59,7 +61,7 @@ export default function PDFViewer() {
     const fetchChatAssociation = async () => {
       const response = await fetch("api/chat-association", {
         method: "POST",
-        body: JSON.stringify({ userId: userId }),
+        body: JSON.stringify({ userId }),
       });
       const { chatAssociationId } = await response.json();
       setChatId(chatAssociationId);
@@ -121,28 +123,41 @@ export default function PDFViewer() {
   };
 
   const handleImproveWithAI = async () => {
-    setIsLoading(true);
-    const response = await fetch("/api/improve-text", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        originalText: selectedText,
-        criterion: rubricBuffer,
-        chatId,
-      }),
-    });
+    try {
+      setIsLoading(true);
+      const response = await fetch("/api/improve-text", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          originalText: selectedText,
+          criterion: rubricBuffer,
+          chatId,
+        }),
+      });
 
-    const data = await response.json();
-    setAiResponses([
-      ...aiResponses,
-      {
-        id: aiResponses.length + 1,
-        improvedText: data,
-      },
-    ]);
-    setIsLoading(false);
+      if (!response.ok) {
+        const { message } = await response.json();
+        return new Error(message);
+      }
+
+      const data = await response.json();
+      setAiResponses([
+        ...aiResponses,
+        {
+          id: aiResponses.length + 1,
+          improvedText: data,
+        },
+      ]);
+      setIsLoading(false);
+    } catch (error) {
+      toast({
+        title: "Server Error",
+        description: error as string,
+      });
+      setIsLoading(false);
+    }
   };
 
   return (

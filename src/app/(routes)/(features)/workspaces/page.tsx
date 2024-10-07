@@ -22,6 +22,7 @@ export default function Page() {
     method: "GET",
     body: null,
   });
+  console.log(data);
   useEffect(() => {
     if (data) {
       setFeedbacksList(data.data);

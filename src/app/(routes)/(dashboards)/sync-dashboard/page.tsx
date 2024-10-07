@@ -19,22 +19,32 @@ import { useRef } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
   const ref = useRef(null);
   const { toast } = useToast();
-  // const chartData = useMemo(() => {
-  //   const data = [];
-  //   let index = "1";
-  //   for (const [, value] of Object.entries(feedback)) {
-  //     data.push({
-  //       month: index,
-  //       score: value,
-  //     });
-  //     index = index + "1";
-  //   }
-  //   return data;
-  // }, [feedback]);
+  const { feedback } = useContext(feedbackContext);
+
+  if (!feedback) {
+    router.push("/");
+  }
+
+  const chartData = useMemo(() => {
+    const data = [];
+    let index = 1;
+    if (feedback) {
+      for (const [, value] of Object.entries(feedback)) {
+        data.push({
+          month: index.toString(),
+          score: value,
+        });
+        index++;
+      }
+      return data;
+    }
+  }, [feedback]);
 
   const exportToPDF = async () => {
     if (!ref.current) return;
@@ -112,8 +122,8 @@ export default function Page() {
               <Progress value={scores.criteria1} />
             </CardContent>
           </Card>
-          <BarChartComponent data={scores} />
-          <RadarChartComponent />
+          <BarChartComponent data={chartData} />
+          <RadarChartComponent data={chartData} />
         </div>
         <Card>
           <CardHeader>
@@ -123,20 +133,23 @@ export default function Page() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue="account">
+            <Tabs defaultValue={"Criteria 1"}>
               <TabsList>
-                {Object.entries(scores).map(([key, value]) => (
-                  <TabsTrigger key={key} value={key}>
-                    {key}
+                {chartData?.map((item: any, index: number) => (
+                  <TabsTrigger key={index} value={item.month}>
+                    {`Criteria ${index + 1}`}
                   </TabsTrigger>
                 ))}
               </TabsList>
-              <TabsContent value="account">
-                Make changes to your account here.
-              </TabsContent>
-              <TabsContent value="password">
-                Change your password here.
-              </TabsContent>
+              {Object.entries(feedback).map(([key, value], index) => (
+                <TabsContent
+                  className="text-sm text-gray-500"
+                  key={index}
+                  value={(index + 1).toString()}
+                >
+                  {key}
+                </TabsContent>
+              ))}
             </Tabs>
           </CardContent>
         </Card>

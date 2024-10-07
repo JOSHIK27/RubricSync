@@ -41,7 +41,7 @@ const chartConfig = {
 
 export default function BarChartComponent({ data }: { data: any }) {
   return (
-    <Card className="w-[400px] m-4">
+    <Card>
       <CardHeader>
         <CardTitle>Bar Chart - Horizontal</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
@@ -50,7 +50,7 @@ export default function BarChartComponent({ data }: { data: any }) {
         <ChartContainer config={chartConfig}>
           <BarChart
             accessibilityLayer
-            data={data}
+            data={chartData}
             layout="vertical"
             margin={{
               left: -20,

@@ -36,18 +36,9 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-interface RadarChartComponentPropItem {
-  month: string;
-  score: number;
-}
-
-export async function RadarChartComponent({
-  data,
-}: {
-  data: RadarChartComponentPropItem[];
-}) {
+export async function RadarChartComponent() {
   return (
-    <Card className="w-[400px] m-4">
+    <Card className="">
       <CardHeader className="items-center">
         <CardTitle>Radar Chart - Dots</CardTitle>
         <CardDescription>
@@ -59,7 +50,7 @@ export async function RadarChartComponent({
           config={chartConfig}
           className="mx-auto aspect-square max-h-[250px]"
         >
-          <RadarChart data={data}>
+          <RadarChart data={chartData}>
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <PolarAngleAxis dataKey="month" />
             <PolarGrid />

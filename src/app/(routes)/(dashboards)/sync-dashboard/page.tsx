@@ -63,7 +63,9 @@ export default function Page() {
           <Tabs defaultValue="account">
             <TabsList>
               {Object.entries(scores).map(([key, value]) => (
-                <TabsTrigger value={key}>{key}</TabsTrigger>
+                <TabsTrigger key={key} value={key}>
+                  {key}
+                </TabsTrigger>
               ))}
             </TabsList>
             <TabsContent value="account">

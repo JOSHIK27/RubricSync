@@ -41,7 +41,7 @@ const chartConfig = {
 
 export default function BarChartComponent({ data }: { data: any }) {
   return (
-    <Card className="w-[400px] m-4">
+    <Card>
       <CardHeader>
         <CardTitle>Bar Chart - Horizontal</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
@@ -50,7 +50,7 @@ export default function BarChartComponent({ data }: { data: any }) {
         <ChartContainer config={chartConfig}>
           <BarChart
             accessibilityLayer
-            data={data}
+            data={chartData}
             layout="vertical"
             margin={{
               left: -20,
@@ -73,14 +73,6 @@ export default function BarChartComponent({ data }: { data: any }) {
           </BarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter>
     </Card>
   );
 }

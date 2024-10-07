@@ -25,7 +25,6 @@ export default async function RootLayout({
           <Nav userid={userId} />
           {children}
         </Providers>
-        <Toaster />
       </body>
     </html>
   );

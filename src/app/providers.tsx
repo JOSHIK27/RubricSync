@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRef } from "react";
 import { Provider } from "react-redux";
 import { makeStore, AppStore } from "../lib/store";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const [feedback, setFeedback] = useState<any>(null);
@@ -18,6 +19,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <Provider store={storeRef.current}>
       <ClerkProvider>
+        <Toaster />
         <feedbackContext.Provider value={{ feedback, setFeedback }}>
           <workspaceContext.Provider
             value={{ workspaceCount, setWorkspaceCount }}

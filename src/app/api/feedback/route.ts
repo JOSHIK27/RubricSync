@@ -10,10 +10,12 @@ import pdf from "pdf-parse";
 import { render_page } from "@/lib/utils";
 import { supabase } from "@/lib/supabase";
 import { auth } from "@clerk/nextjs/server";
+
 export async function POST(req: Request) {
   const { userId } = auth();
   try {
     const { reportDataBuffer, rubricDataBuffer } = await req.json();
+    console.log(reportDataBuffer, rubricDataBuffer);
 
     const reportData = await textExtractor(reportDataBuffer);
 
@@ -65,16 +67,17 @@ export async function POST(req: Request) {
       score = score / reportEmbeddingVectorList.length;
       feedback[rubric] = score;
     }
-
+    console.log(feedback);
     const { error } = await supabase.from("feedbacks").insert({
       feedback: JSON.stringify(feedback),
       user_id: userId,
     });
 
     if (error) {
+      console.log(error);
       throw new Error(error.message);
     }
-
+    console.log(feedback);
     return NextResponse.json({ feedback }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ message: error }, { status: 500 });
@@ -100,6 +103,7 @@ export async function GET() {
       feedback: feedbackObj.feedback,
     };
   });
+  console.log(response);
   if (error) {
     return NextResponse.json({ message: error }, { status: 500 });
   }

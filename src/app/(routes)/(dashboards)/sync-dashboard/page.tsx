@@ -1,7 +1,6 @@
 "use client";
 import { useContext, useMemo } from "react";
 import { feedbackContext } from "@/app/context/AppContext";
-import BarChartComponent from "@/components/charts/barChart";
 import {
   Card,
   CardContent,
@@ -10,7 +9,6 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { RadarChartComponent } from "@/components/charts/radarChart";
 import { Button } from "@/components/ui/button";
@@ -32,18 +30,20 @@ export default function Page() {
   }
 
   const chartData = useMemo(() => {
-    const data = [];
-    let index = 1;
-    if (feedback) {
-      for (const [, value] of Object.entries(feedback)) {
-        data.push({
-          month: index.toString(),
-          score: value,
-        });
-        index++;
-      }
-      return data;
-    }
+    if (!feedback) return [];
+
+    return Object.entries(feedback).map(([criterion, score]: any) => ({
+      criterion: criterion.split(".")[0], // Take first sentence for shorter labels
+      score: Math.round(score * 100), // Convert to percentage
+    }));
+  }, [feedback]);
+
+  const averageScore = useMemo(() => {
+    if (!feedback) return 0;
+    const scores: any = Object.values(feedback);
+    return Math.round(
+      (scores.reduce((a: any, b: any) => a + b, 0) / scores.length) * 100
+    );
   }, [feedback]);
 
   const exportToPDF = async () => {
@@ -91,13 +91,6 @@ export default function Page() {
     }
   };
 
-  const scores = {
-    criteria1: 60,
-    criteria2: 70,
-    criteria3: 80,
-    criteria4: 90,
-    criteria5: 100,
-  };
   return (
     <div className="p-10">
       <div className="flex justify-between items-center">
@@ -111,46 +104,56 @@ export default function Page() {
         </Button>
       </div>
       <Separator className="my-4" />
+
       <div ref={ref}>
-        <div className="mb-2 grid grid-cols-1 md:grid-cols-3 gap-2">
+        <div className="mb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <Card>
             <CardHeader>
               <CardTitle>Overall Score</CardTitle>
+              <CardDescription>Average across all criteria</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="text-5xl font-bold mb-2">70</div>
-              <Progress value={scores.criteria1} />
+              <div className="text-5xl font-bold mb-2 text-blue-700">
+                {averageScore}%
+              </div>
+              <Progress value={averageScore} className="h-2" />
             </CardContent>
           </Card>
-          <BarChartComponent data={chartData} />
-          <RadarChartComponent data={chartData} />
+
+          <Card className="col-span-2">
+            <CardHeader>
+              <CardTitle>Criteria Breakdown</CardTitle>
+              <CardDescription>
+                Score distribution across different criteria
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <RadarChartComponent data={chartData} />
+            </CardContent>
+          </Card>
         </div>
+
         <Card>
           <CardHeader>
             <CardTitle>Detailed Feedback</CardTitle>
             <CardDescription>
-              Review feedback for each section of your report
+              Review feedback for each criterion
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue={"Criteria 1"}>
-              <TabsList>
-                {chartData?.map((item: any, index: number) => (
-                  <TabsTrigger key={index} value={item.month}>
-                    {`Criteria ${index + 1}`}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-              {Object.entries(feedback).map(([key, value], index) => (
-                <TabsContent
-                  className="text-sm text-gray-500"
-                  key={index}
-                  value={(index + 1).toString()}
-                >
-                  {key}
-                </TabsContent>
+            <div className="space-y-6">
+              {chartData.map((item, index) => (
+                <div key={index} className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <div className="font-medium">{item.criterion}</div>
+                    <div className="text-sm text-blue-700 font-semibold">
+                      {item.score}%
+                    </div>
+                  </div>
+                  <Progress value={item.score} className="h-2" />
+                </div>
               ))}
-            </Tabs>
+            </div>
           </CardContent>
         </Card>
       </div>
